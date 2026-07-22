@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Layanan Kemenag Kota Surakarta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Latar Belakang Gedung Kemenag */
+        .bg-gedung {
+            background-image: url('https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Overlay gelap agar teks terbaca */
+        .overlay {
+            background-color: rgba(15, 30, 45, 0.75);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* MODE KONTRAS TINGGI (Aksesibilitas) */
+        body.high-contrast .bg-gedung { background-image: none !important; background-color: #000000 !important; }
+        body.high-contrast .overlay { background-color: transparent !important; }
+        body.high-contrast * { color: #ffff00 !important; border-color: #ffff00 !important; }
+        body.high-contrast .card-menu { background-color: #1a1a1a !important; border: 2px solid #ffff00 !important; box-shadow: none; }
+        body.high-contrast .card-menu i { color: #ffff00 !important; }
+        body.high-contrast .btn-pill { background-color: #000 !important; border: 2px solid #ffff00 !important; }
+        body.high-contrast .accessibility-btn { background-color: #ffff00 !important; color: #000 !important; }
+        body.high-contrast .accessibility-menu { background-color: #000 !important; border: 2px solid #ffff00 !important; }
+        body.high-contrast a:focus, body.high-contrast button:focus { outline: 4px solid #00ffff !important; }
+
+        /* Ukuran Teks (Aksesibilitas) */
+        body.text-large { font-size: 115%; }
+        body.text-xlarge { font-size: 130%; }
+
+        /* Efek Kartu Menu */
+        .card-menu {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card-menu:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        
+        /* Outline untuk navigasi keyboard */
+        a:focus, button:focus {
+            outline: 3px solid #facc15;
+            outline-offset: 2px;
+        }
+
+        /* Styling tambahan untuk halaman login & efek blur */
+        .bg-gedung-blur {
+            background-image: url('https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            inset: -5%;
+            z-index: 0;
+            filter: blur(12px);
+        }
+        .overlay-dark {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(15, 30, 45, 0.85) 0%, rgba(10, 80, 50, 0.85) 100%);
+            z-index: 1;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .error-shake {
+            animation: shake 0.5s;
+        }
+    </style>
+</head>
+<body class="bg-gedung">
+    
+    <div id="landing-page" class="overlay relative pb-10 transition-opacity duration-300">
+        
+        <!-- Tombol Aksesibilitas Melayang -->
+        <div class="fixed top-4 right-4 z-50 flex flex-col items-end">
+            <button id="btn-a11y-toggle" class="accessibility-btn bg-blue-600 hover:bg-blue-700 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg focus:ring-2 focus:ring-white transition-colors" aria-label="Buka Menu Aksesibilitas" aria-expanded="false">
+                <i class="fas fa-universal-access text-xl"></i>
+            </button>
+            
+            <div id="a11y-menu" class="accessibility-menu hidden mt-2 bg-white rounded-lg shadow-xl p-3 w-48 border border-gray-200">
+                <p class="text-xs font-bold text-gray-700 mb-2 border-b pb-1 text-center">Aksesibilitas</p>
+                <div class="flex flex-col space-y-2">
+                    <button id="btn-text-normal" class="text-sm py-1 px-2 bg-gray-100 hover:bg-gray-200 rounded text-gray-800 focus:ring-2">Ukuran Normal (A)</button>
+                    <button id="btn-text-large" class="text-sm py-1 px-2 bg-gray-100 hover:bg-gray-200 rounded text-gray-800 focus:ring-2">Perbesar Teks (A+)</button>
+                    <button id="btn-contrast" class="text-sm py-1 px-2 bg-gray-800 hover:bg-black text-white rounded focus:ring-2 flex items-center justify-center">
+                        <i class="fas fa-adjust mr-2"></i> Kontras Tinggi
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- HEADER -->
+        <header class="w-full flex flex-col items-center justify-center pt-12 pb-6 px-4 text-center">
+            <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg mb-4 p-2">
+                <i class="fas fa-star-and-crescent text-4xl text-green-700"></i>
+            </div>
+            
+            <h1 class="text-2xl md:text-3xl font-bold text-white tracking-wide uppercase drop-shadow-md">
+                PORTAL LAYANAN TERPADU
+            </h1>
+            <h2 class="text-lg md:text-xl font-medium text-gray-200 mt-2 max-w-2xl drop-shadow-md">
+                KANTOR KEMENTERIAN AGAMA KOTA SURAKARTA
+            </h2>
+
+            <div class="flex flex-wrap justify-center gap-3 mt-6">
+                <a href="#" class="btn-pill bg-teal-500 hover:bg-teal-600 text-white px-5 py-1.5 rounded-full text-sm font-semibold shadow transition focus:ring-2 focus:ring-white">
+                    Website Utama
+                </a>
+                <a href="#" class="btn-pill bg-teal-500 hover:bg-teal-600 text-white px-5 py-1.5 rounded-full text-sm font-semibold shadow transition focus:ring-2 focus:ring-white">
+                    Hasil Survey 2026
+                </a>
+            </div>
+        </header>
+
+        <!-- MAIN MENU GRID -->
+        <main class="flex-grow flex items-center justify-center px-4 w-full max-w-4xl mx-auto">
+            <div id="menu-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+                <!-- Data menu dirender dinamis via JavaScript -->
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="mt-auto pt-8 pb-4 px-4 text-center">
+            <div class="flex justify-center items-center mb-3">
+                <span class="bg-green-600 text-white px-3 py-1 rounded text-sm font-bold shadow-md">
+                    <i class="fas fa-heart mr-1"></i> SURAKARTA BERKAH
+                </span>
+            </div>
+            <p class="text-xs text-gray-300 drop-shadow-md">
+                Copyright &copy; 2026 KANTOR KEMENTERIAN AGAMA KOTA SURAKARTA.<br>
+                All Rights Reserved.
+            </p>
+            
+            <div class="mt-4 flex justify-center">
+                <a href="#" id="link-open-login" class="inline-flex items-center text-[10px] text-gray-400 hover:text-white transition-colors bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-yellow-400" aria-label="Halaman Login Admin">
+                    <i class="fas fa-lock mr-1.5"></i> Login Pengelola
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <div id="login-page" class="hidden fixed inset-0 z-[100] flex items-center justify-center">
+        <div class="bg-gedung-blur"></div>
+        <div class="overlay-dark"></div>
+
+        <main class="w-full max-w-md px-4 py-8 z-10 relative">
+            <div class="glass-card rounded-2xl overflow-hidden shadow-2xl">
+                <div class="bg-gradient-to-r from-green-800 to-green-600 p-8 text-center text-white relative">
+                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg mx-auto mb-4 border-4 border-green-500/30">
+                        <i class="fas fa-user-shield text-4xl text-green-700"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold tracking-wide">PORTAL ADMIN</h1>
+                    <p class="text-green-100 text-sm mt-1">Kemenag Kota Surakarta</p>
+                </div>
+
+                <div class="p-8">
+                    <div id="error-message" class="hidden bg-red-50 border-l-4 border-red-500 text-red-700 p-3 mb-6 rounded text-sm transition-all flex items-start" role="alert">
+                        <i class="fas fa-exclamation-circle mt-0.5 mr-2"></i>
+                        <div>
+                            <p class="font-bold">Gagal Masuk</p>
+                            <p id="error-text" class="text-xs mt-1">Username atau password salah.</p>
+                        </div>
+                    </div>
+
+                    <form id="login-form" novalidate>
+                        <div class="mb-5">
+                            <label for="username" class="block text-sm font-semibold text-gray-700 mb-1.5">Username Administrator</label>
+                            <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500 focus-within:ring-1 focus-within:ring-green-500 transition-colors bg-gray-50">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                                    <i class="fas fa-id-badge"></i>
+                                </div>
+                                <input type="text" id="username" name="username" class="w-full pl-10 pr-4 py-3 bg-transparent rounded-lg border-none focus:ring-0 text-gray-700 placeholder-gray-400" placeholder="Masukkan username" required autocomplete="username">
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="password" class="block text-sm font-semibold text-gray-700 mb-1.5">Kata Sandi</label>
+                            <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500 focus-within:ring-1 focus-within:ring-green-500 transition-colors bg-gray-50">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                                    <i class="fas fa-key"></i>
+                                </div>
+                                <input type="password" id="password" name="password" class="w-full pl-10 pr-12 py-3 bg-transparent rounded-lg border-none focus:ring-0 text-gray-700 placeholder-gray-400" placeholder="Masukkan kata sandi" required autocomplete="current-password">
+                                
+                                <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-green-600 focus:outline-none transition-colors" aria-label="Tampilkan kata sandi">
+                                    <i class="fas fa-eye" id="eye-icon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="btn-submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 px-4 rounded-lg shadow-md hover:shadow-lg transition-all flex justify-center items-center group">
+                            <span id="btn-text">MASUK KE DASHBOARD</span>
+                            <i id="btn-icon" class="fas fa-sign-in-alt ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            <i id="btn-spinner" class="fas fa-circle-notch fa-spin hidden ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="text-center mt-6">
+                <a href="#" id="link-back-landing" class="inline-flex items-center text-sm text-green-100 hover:text-white transition-colors py-2 px-5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 shadow-sm">
+                    <i class="fas fa-arrow-left mr-2"></i> Kembali ke Halaman Utama
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <div id="dashboard-page" class="hidden fixed inset-0 z-[100] bg-gray-50 flex flex-col h-screen overflow-hidden">
+        <header class="bg-green-800 text-white p-4 shadow-md flex justify-between items-center z-10">
+            <div class="flex items-center font-bold text-lg">
+                <i class="fas fa-user-shield mr-3 text-2xl"></i> Dashboard Panel Admin
+            </div>
+            <button id="btn-logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-sm font-semibold transition-colors flex items-center shadow focus:ring-2 focus:ring-white">
+                <i class="fas fa-sign-out-alt mr-2"></i> Keluar Sistem
+            </button>
+        </header>
+
+        <div class="flex-grow overflow-y-auto p-4 md:p-8">
+            <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="p-6 border-b border-gray-200 bg-gray-50 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">Manajemen Menu Layanan</h2>
+                        <p class="text-sm text-gray-500 mt-1">Atur menu yang ditampilkan pada halaman utama Portal.</p>
+                    </div>
+                    <button onclick="openMenuModal()" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-md transition-colors flex items-center">
+                        <i class="fas fa-plus mr-2"></i> Tambah Menu Baru
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-700 uppercase text-xs tracking-wider">
+                                <th class="p-4 font-semibold w-16 text-center">Ikon</th>
+                                <th class="p-4 font-semibold">Nama Layanan</th>
+                                <th class="p-4 font-semibold">Tautan (Link)</th>
+                                <th class="p-4 font-semibold w-32 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-table-body" class="divide-y divide-gray-200">
+                            <!-- Baris tabel dirender JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FORM TAMBAH/EDIT MENU -->
+    <div id="modal-form" class="hidden fixed inset-0 z-[200] flex items-center justify-center">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeMenuModal()"></div>
+        <div class="bg-white rounded-xl shadow-2xl z-10 w-full max-w-md mx-4 overflow-hidden transform transition-all">
+            <div class="bg-green-700 p-4 text-white flex justify-between items-center">
+                <h3 id="modal-title" class="font-bold text-lg">Tambah Menu Baru</h3>
+                <button onclick="closeMenuModal()" class="text-green-100 hover:text-white focus:outline-none">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="menu-form" class="p-6">
+                <input type="hidden" id="menu-id">
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Layanan</label>
+                    <input type="text" id="menu-nama" required class="w-full border border-gray-300 rounded px-3 py-2 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none" placeholder="Contoh: PTSP Kemenag">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Class Ikon (FontAwesome)</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="menu-ikon" required class="w-full border border-gray-300 rounded px-3 py-2 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none font-mono text-sm" placeholder="Contoh: fa-solid fa-tablet text-orange-500">
+                        <div id="icon-preview" class="w-10 h-10 border border-gray-300 rounded bg-gray-50 flex items-center justify-center text-lg">
+                            <i class="fas fa-question text-gray-400"></i>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">Format: [class ikon] [class warna tailwind]</p>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Tautan URL</label>
+                    <input type="text" id="menu-link" required class="w-full border border-gray-300 rounded px-3 py-2 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none" placeholder="Contoh: https://... atau #">
+                </div>
+
+                <div class="flex justify-end gap-3">
+                    <button type="button" onclick="closeMenuModal()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded font-medium transition-colors">Batal</button>
+                    <button type="submit" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded font-medium transition-colors shadow">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL KONFIRMASI HAPUS -->
+    <div id="modal-delete" class="hidden fixed inset-0 z-[200] flex items-center justify-center">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeDeleteModal()"></div>
+        <div class="bg-white rounded-xl shadow-2xl z-10 w-full max-w-sm mx-4 p-6 text-center transform transition-all">
+            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 text-red-600 text-3xl">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3 class="font-bold text-xl text-gray-800 mb-2">Hapus Menu?</h3>
+            <p class="text-gray-600 text-sm mb-6">Apakah Anda yakin ingin menghapus menu <strong id="delete-target-name"></strong>? Tindakan ini tidak dapat dibatalkan.</p>
+            
+            <div class="flex justify-center gap-3">
+                <button onclick="closeDeleteModal()" class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium transition-colors w-full">Batal</button>
+                <button id="btn-confirm-delete" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors w-full shadow">Ya, Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFIKASI -->
+    <div id="toast-notification" class="fixed bottom-5 right-5 z-[300] transform translate-y-20 opacity-0 transition-all duration-300 bg-gray-800 text-white px-4 py-3 rounded shadow-lg flex items-center gap-3">
+        <i id="toast-icon" class="fas fa-check-circle text-green-400"></i>
+        <span id="toast-message" class="text-sm font-medium">Berhasil disimpan.</span>
+    </div>
+
+    <script>
+        /**
+         * 1. DATABASE MENU (Format JSON Sederhana & Benar)
+         */
+        let databaseMenu = [
+            { id: "M01", nama: "PTSP KEMENAG", ikon: "fa-solid fa-tablet-screen-button text-orange-500", link: "#" },
+            { id: "M02", nama: "PUSAKA", ikon: "fa-solid fa-droplet text-teal-400", link: "#" },
+            { id: "M03", nama: "Inovasi Kemenag Surakarta", ikon: "fa-solid fa-id-badge text-blue-500", link: "#" },
+            { id: "M04", nama: "Data & Informasi", ikon: "fa-solid fa-chart-line text-red-500", link: "#" },
+            { id: "M05", nama: "Info Kepegawaian", ikon: "fa-solid fa-users text-purple-500", link: "#" },
+            { id: "M06", nama: "Media Sosial", ikon: "fa-solid fa-share-nodes text-pink-500", link: "#" },
+            { id: "M07", nama: "Pengaduan", ikon: "fa-solid fa-bullhorn text-blue-700", link: "#" },
+            { id: "M08", nama: "Standar Pelayanan", ikon: "fa-solid fa-clipboard-check text-green-600", link: "#" }
+        ];
+
+        /**
+         * 2. RENDER MENU UTAMA PADA LANDING PAGE
+         */
+        const gridContainer = document.getElementById('menu-grid');
+
+        function renderMenu() {
+            gridContainer.innerHTML = '';
+            databaseMenu.forEach(menu => {
+                const card = document.createElement('a');
+                card.href = menu.link;
+                card.className = 'card-menu flex flex-col items-center justify-center p-4 rounded-xl border border-gray-200 text-center aspect-square focus:outline-none';
+                card.setAttribute('aria-label', `Menu ${menu.nama}`);
+                
+                card.innerHTML = `
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-gray-100 rounded-full flex items-center justify-center mb-3 shadow-inner">
+                        <i class="${menu.ikon} text-3xl md:text-4xl" aria-hidden="true"></i>
+                    </div>
+                    <span class="text-sm md:text-base font-semibold text-gray-800 leading-tight">${menu.nama}</span>
+                `;
+                
+                gridContainer.appendChild(card);
+            });
+        }
+
+        renderMenu();
+
+        /**
+         * 3. LOGIKA PANEL AKSESIBILITAS
+         */
+        const btnToggleA11y = document.getElementById('btn-a11y-toggle');
+        const a11yMenu = document.getElementById('a11y-menu');
+        const bodyEl = document.body;
+        
+        btnToggleA11y.addEventListener('click', () => {
+            const isHidden = a11yMenu.classList.contains('hidden');
+            if (isHidden) {
+                a11yMenu.classList.remove('hidden');
+                btnToggleA11y.setAttribute('aria-expanded', 'true');
+            } else {
+                a11yMenu.classList.add('hidden');
+                btnToggleA11y.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        document.getElementById('btn-text-normal').addEventListener('click', () => {
+            bodyEl.classList.remove('text-large', 'text-xlarge');
+        });
+        
+        document.getElementById('btn-text-large').addEventListener('click', () => {
+            if(bodyEl.classList.contains('text-large')) {
+                bodyEl.classList.remove('text-large');
+                bodyEl.classList.add('text-xlarge');
+            } else {
+                bodyEl.classList.add('text-large');
+            }
+        });
+
+        const btnContrast = document.getElementById('btn-contrast');
+        btnContrast.addEventListener('click', () => {
+            bodyEl.classList.toggle('high-contrast');
+            if(bodyEl.classList.contains('high-contrast')) {
+                btnContrast.innerHTML = '<i class="fas fa-sun mr-2"></i> Mode Normal';
+            } else {
+                btnContrast.innerHTML = '<i class="fas fa-adjust mr-2"></i> Kontras Tinggi';
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!btnToggleA11y.contains(e.target) && !a11yMenu.contains(e.target)) {
+                a11yMenu.classList.add('hidden');
+                btnToggleA11y.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        /**
+         * 4. LOGIKA PERPINDAHAN HALAMAN (SPA)
+         */
+        const landingPage = document.getElementById('landing-page');
+        const loginPage = document.getElementById('login-page');
+        const dashboardPage = document.getElementById('dashboard-page');
+        
+        document.getElementById('link-open-login').addEventListener('click', (e) => {
+            e.preventDefault();
+            landingPage.classList.add('hidden');
+            loginPage.classList.remove('hidden');
+        });
+
+        document.getElementById('link-back-landing').addEventListener('click', (e) => {
+            e.preventDefault();
+            loginPage.classList.add('hidden');
+            landingPage.classList.remove('hidden');
+            document.getElementById('login-form').reset();
+            document.getElementById('error-message').classList.add('hidden');
+        });
+
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            dashboardPage.classList.add('hidden');
+            landingPage.classList.remove('hidden');
+            
+            document.getElementById('login-form').reset();
+            const btnSubmit = document.getElementById('btn-submit');
+            const btnText = document.getElementById('btn-text');
+            const btnIcon = document.getElementById('btn-icon');
+            const btnSpinner = document.getElementById('btn-spinner');
+            
+            btnText.textContent = 'MASUK KE DASHBOARD';
+            btnSubmit.classList.replace('bg-blue-600', 'bg-green-600');
+            btnSubmit.classList.replace('hover:bg-blue-700', 'hover:bg-green-700');
+            btnIcon.classList.remove('hidden');
+            btnSpinner.classList.replace('fa-check-circle', 'fa-circle-notch');
+            btnSpinner.classList.add('fa-spin', 'hidden');
+            btnSubmit.disabled = false;
+            btnSubmit.classList.remove('opacity-80', 'cursor-not-allowed');
+        });
+
+        /**
+         * 5. LOGIKA FORM LOGIN
+         */
+        const loginForm = document.getElementById('login-form');
+        const togglePassword = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eye-icon');
+        
+        const errorMessage = document.getElementById('error-message');
+        const errorText = document.getElementById('error-text');
+        const btnSubmit = document.getElementById('btn-submit');
+        const btnText = document.getElementById('btn-text');
+        const btnIcon = document.getElementById('btn-icon');
+        const btnSpinner = document.getElementById('btn-spinner');
+
+        togglePassword.addEventListener('click', function (e) {
+            e.preventDefault(); 
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+            if (isPassword) {
+                eyeIcon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                eyeIcon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            errorMessage.classList.add('hidden');
+            loginForm.parentElement.classList.remove('error-shake');
+
+            const username = document.getElementById('username').value.trim();
+            const password = passwordInput.value;
+
+            if (username === '' || password === '') {
+                showError('Mohon isi username dan kata sandi Anda dengan lengkap.');
+                return;
+            }
+
+            btnText.textContent = 'MEMVERIFIKASI...';
+            btnIcon.classList.add('hidden');
+            btnSpinner.classList.remove('hidden');
+            btnSubmit.disabled = true;
+            btnSubmit.classList.add('opacity-80', 'cursor-not-allowed');
+
+            setTimeout(() => {
+                if (username === 'admin' && password === 'admin123') {
+                    btnText.textContent = 'BERHASIL MASUK';
+                    btnSubmit.classList.replace('bg-green-600', 'bg-blue-600');
+                    btnSubmit.classList.replace('hover:bg-green-700', 'hover:bg-blue-700');
+                    btnSpinner.classList.replace('fa-circle-notch', 'fa-check-circle');
+                    btnSpinner.classList.remove('fa-spin');
+                    
+                    setTimeout(() => {
+                        loginPage.classList.add('hidden');
+                        dashboardPage.classList.remove('hidden');
+                        renderAdminTable(); 
+                    }, 800);
+
+                } else {
+                    showError('Username atau kata sandi tidak valid. Akses ditolak.');
+                    btnText.textContent = 'MASUK KE DASHBOARD';
+                    btnIcon.classList.remove('hidden');
+                    btnSpinner.classList.add('hidden');
+                    btnSubmit.disabled = false;
+                    btnSubmit.classList.remove('opacity-80', 'cursor-not-allowed');
+                }
+            }, 1200);
+        });
+
+        function showError(message) {
+            errorText.textContent = message;
+            errorMessage.classList.remove('hidden');
+            const card = loginForm.parentElement;
+            card.classList.remove('error-shake');
+            void card.offsetWidth;
+            card.classList.add('error-shake');
+            document.getElementById('username').focus();
+        }
+
+        /**
+         * 6. PENGELOLAAN MENU (ADMIN CRUD)
+         */
+        const adminTableBody = document.getElementById('admin-table-body');
+        const modalForm = document.getElementById('modal-form');
+        const modalTitle = document.getElementById('modal-title');
+        const menuForm = document.getElementById('menu-form');
+        
+        const inputId = document.getElementById('menu-id');
+        const inputNama = document.getElementById('menu-nama');
+        const inputIkon = document.getElementById('menu-ikon');
+        const inputLink = document.getElementById('menu-link');
+        const iconPreview = document.getElementById('icon-preview');
+
+        function renderAdminTable() {
+            adminTableBody.innerHTML = '';
+            
+            if (databaseMenu.length === 0) {
+                adminTableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-500">Belum ada data menu. Silakan tambah baru.</td></tr>`;
+                return;
+            }
+
+            databaseMenu.forEach(menu => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 transition-colors border-b border-gray-100";
+                tr.innerHTML = `
+                    <td class="p-4 text-center">
+                        <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mx-auto shadow-inner text-lg">
+                            <i class="${menu.ikon}"></i>
+                        </div>
+                    </td>
+                    <td class="p-4 font-medium text-gray-800">${menu.nama}</td>
+                    <td class="p-4 text-sm text-blue-600 truncate max-w-xs"><a href="${menu.link}" target="_blank" class="hover:underline">${menu.link}</a></td>
+                    <td class="p-4 text-center">
+                        <div class="flex items-center justify-center gap-2">
+                            <button onclick="openMenuModal('${menu.id}')" class="text-blue-500 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 p-2 rounded transition-colors" title="Edit Menu">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="confirmDelete('${menu.id}', '${menu.nama}')" class="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 p-2 rounded transition-colors" title="Hapus Menu">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                adminTableBody.appendChild(tr);
+            });
+        }
+
+        inputIkon.addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            if (val) {
+                iconPreview.innerHTML = `<i class="${val}"></i>`;
+            } else {
+                iconPreview.innerHTML = `<i class="fas fa-question text-gray-400"></i>`;
+            }
+        });
+
+        function openMenuModal(id = null) {
+            menuForm.reset();
+            iconPreview.innerHTML = `<i class="fas fa-question text-gray-400"></i>`;
+            
+            if (id) {
+                const menu = databaseMenu.find(m => m.id === id);
+                if (menu) {
+                    modalTitle.textContent = "Edit Menu Layanan";
+                    inputId.value = menu.id;
+                    inputNama.value = menu.nama;
+                    inputIkon.value = menu.ikon;
+                    inputLink.value = menu.link;
+                    iconPreview.innerHTML = `<i class="${menu.ikon}"></i>`;
+                }
+            } else {
+                modalTitle.textContent = "Tambah Menu Baru";
+                inputId.value = "";
+            }
+            
+            modalForm.classList.remove('hidden');
+        }
+
+        function closeMenuModal() {
+            modalForm.classList.add('hidden');
+        }
+
+        menuForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const id = inputId.value;
+            const newData = {
+                id: id ? id : "M" + Date.now().toString().slice(-4),
+                nama: inputNama.value.trim(),
+                ikon: inputIkon.value.trim(),
+                link: inputLink.value.trim()
+            };
+
+            if (id) {
+                const index = databaseMenu.findIndex(m => m.id === id);
+                if (index !== -1) databaseMenu[index] = newData;
+                showToast("Menu berhasil diperbarui!");
+            } else {
+                databaseMenu.push(newData);
+                showToast("Menu baru berhasil ditambahkan!");
+            }
+
+            closeMenuModal();
+            renderAdminTable();
+            renderMenu();
+        });
+
+        const modalDelete = document.getElementById('modal-delete');
+        const deleteTargetName = document.getElementById('delete-target-name');
+        const btnConfirmDelete = document.getElementById('btn-confirm-delete');
+        let deleteIdTarget = null;
+
+        function confirmDelete(id, nama) {
+            deleteIdTarget = id;
+            deleteTargetName.textContent = nama;
+            modalDelete.classList.remove('hidden');
+        }
+
+        function closeDeleteModal() {
+            modalDelete.classList.add('hidden');
+            deleteIdTarget = null;
+        }
+
+        btnConfirmDelete.addEventListener('click', () => {
+            if (deleteIdTarget) {
+                databaseMenu = databaseMenu.filter(m => m.id !== deleteIdTarget);
+                closeDeleteModal();
+                renderAdminTable();
+                renderMenu();
+                showToast("Menu berhasil dihapus!", "error");
+            }
+        });
+
+        const toastEl = document.getElementById('toast-notification');
+        const toastMsg = document.getElementById('toast-message');
+        const toastIcon = document.getElementById('toast-icon');
+        let toastTimeout;
+
+        function showToast(message, type = "success") {
+            clearTimeout(toastTimeout);
+            toastMsg.textContent = message;
+            
+            if (type === "error") {
+                toastIcon.className = "fas fa-trash-alt text-red-400";
+            } else {
+                toastIcon.className = "fas fa-check-circle text-green-400";
+            }
+
+            toastEl.classList.remove('translate-y-20', 'opacity-0');
+            
+            toastTimeout = setTimeout(() => {
+                toastEl.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
