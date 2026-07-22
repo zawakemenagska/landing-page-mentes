@@ -136,11 +136,8 @@
 
         <!-- HEADER -->
         <header class="w-full flex flex-col items-center justify-center pt-8 pb-6 px-4 text-center">
-            <!-- Logo Container (Frame dihapus jika gambar ada) -->
             <div id="display-logo-container" class="mb-4 flex items-center justify-center">
-                <!-- Gambar Logo Asli (Tanpa Frame) -->
                 <img id="display-logo-img" src="" alt="Logo Instansi" class="max-h-24 md:max-h-32 object-contain hidden drop-shadow-lg">
-                <!-- Ikon Default (Ditampilkan jika tidak ada logo) -->
                 <div id="display-logo-icon" class="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center shadow-lg p-2 backdrop-blur-sm border-2 border-white/20">
                     <i class="fas fa-star-and-crescent text-4xl text-green-700"></i>
                 </div>
@@ -153,7 +150,7 @@
                 KANTOR KEMENTERIAN AGAMA
             </h2>
 
-            <!-- Lencana Informasi Kontak (PTSP, Pengaduan, Jam) -->
+            <!-- Lencana Informasi Kontak -->
             <div class="mt-4 flex flex-wrap justify-center gap-2 md:gap-3 text-xs md:text-sm text-white/95">
                 <span class="bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/10 shadow-sm flex items-center">
                     <i class="fab fa-whatsapp text-green-400 mr-2 text-base"></i> Chat PTSP: <strong id="display-kontak-ptsp" class="ml-1 tracking-wide"></strong>
@@ -168,8 +165,9 @@
         </header>
 
         <!-- MAIN MENU GRID -->
-        <main class="flex-grow flex items-center justify-center px-4 w-full max-w-4xl mx-auto">
-            <div id="menu-grid" class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 w-full">
+        <main class="flex-grow flex items-center justify-center px-4 w-full max-w-3xl mx-auto">
+            <!-- Grid diperbarui: Kolom gap lebih disesuaikan untuk kotak yang presisi -->
+            <div id="menu-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 w-full">
                 <!-- Data menu dirender dinamis via JavaScript -->
             </div>
         </main>
@@ -185,7 +183,7 @@
                 Copyright &copy; 2026 <span id="display-footer-instansi">INSTANSI</span>.<br>
                 All Rights Reserved.
             </p>
-            <div class="mt-4 flex justify-center">
+            <div class="mt-4 flex justify-center relative z-50">
                 <a href="#" id="link-open-login" class="inline-flex items-center text-[10px] text-gray-400 hover:text-white transition-colors bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-yellow-400" title="Login Administrator">
                     <i class="fas fa-lock mr-1.5"></i> Login Pengelola
                 </a>
@@ -222,7 +220,6 @@
         <main class="w-full max-w-md px-4 py-8 z-10 relative">
             <div class="glass-card rounded-2xl overflow-hidden shadow-2xl">
                 <div class="bg-gradient-to-r from-green-800 to-green-600 p-8 text-center text-white relative">
-                    <!-- Logo Admin -->
                     <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg mx-auto mb-4 border-4 border-green-500/30 p-2 overflow-hidden bg-white/90 backdrop-blur">
                         <img id="login-logo-img" src="" alt="Logo Instansi" class="max-h-full max-w-full object-contain hidden">
                         <i id="login-logo-icon" class="fas fa-user-shield text-4xl text-green-700"></i>
@@ -318,7 +315,7 @@
                 </div>
             </div>
 
-            <!-- TAB 2: PENGATURAN WEBSITE -->
+            <!-- TAB 2: PENGATURAN WEBSITE & DATABASE EXPORTER -->
             <div id="admin-setting-section" class="max-w-5xl mx-auto bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hidden">
                 <div class="p-6 border-b border-gray-200 bg-gray-50">
                     <h2 class="text-xl font-bold text-gray-800">Pengaturan Identitas Website</h2>
@@ -344,8 +341,20 @@
                             <div><label class="block text-sm font-semibold text-gray-700 mb-1">URL Favicon</label><input type="url" id="set-favicon" class="w-full border rounded px-3 py-2 font-mono text-sm outline-none focus:border-green-500"></div>
                         </div>
                     </div>
+                    
                     <div class="pt-6 border-t flex justify-end">
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-bold shadow flex items-center transition-colors"><i class="fas fa-save mr-2"></i> Simpan Pengaturan Sistem</button>
+                    </div>
+
+                    <!-- DATABASE EXPORTER: Mencegah hilang saat deploy -->
+                    <div class="mt-10 border-t-4 border-dashed border-gray-200 pt-6">
+                        <h3 class="text-base font-bold text-indigo-700 mb-1"><i class="fas fa-database mr-2"></i> Ekspor Konfigurasi Code (Deploy Aman)</h3>
+                        <p class="text-sm text-gray-500 mb-4">Salin (copy) kode di bawah ini, dan gantikan (paste) pada blok <b>1. DATABASE & CONFIGURATION</b> di source code HTML Anda sebelum melakukan deploy ulang agar semua editan tidak hilang.</p>
+                        
+                        <div class="relative">
+                            <textarea id="db-exporter" rows="12" class="w-full border border-gray-300 rounded-lg p-4 font-mono text-xs bg-gray-800 text-green-400 outline-none resize-y" readonly spellcheck="false"></textarea>
+                            <button type="button" onclick="copyDatabase()" class="absolute top-3 right-3 bg-white/10 hover:bg-white/20 text-white border border-white/30 px-3 py-1.5 rounded text-xs font-bold transition-colors"><i class="fas fa-copy mr-1"></i> Copy Code</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -392,10 +401,9 @@
             </div>
             
             <div class="p-4 bg-indigo-50 border-b shrink-0">
-                <!-- Header Penanda Mode Form -->
-                <div class="text-xs font-bold text-indigo-800 uppercase tracking-wide mb-2 flex items-center">
-                    <i class="fas fa-plus-circle mr-1" id="submenu-mode-icon"></i> 
-                    <span id="submenu-mode-text">Tambah Sub-Menu Baru</span>
+                <div class="text-xs font-bold text-indigo-800 uppercase tracking-wide mb-2 flex items-center justify-between">
+                    <div><i class="fas fa-plus-circle mr-1" id="submenu-mode-icon"></i> <span id="submenu-mode-text">Tambah Sub-Menu Baru</span></div>
+                    <span class="text-[10px] text-gray-500 font-normal"><i class="fas fa-info-circle"></i> Geser ikon baris tabel untuk mengurutkan</span>
                 </div>
                 
                 <form id="form-admin-submenu" class="flex flex-col md:flex-row gap-3 md:items-end">
@@ -420,7 +428,8 @@
                 <table class="w-full text-left border-collapse text-sm">
                     <thead>
                         <tr class="bg-gray-100 text-gray-700 border-b">
-                            <th class="p-3 pl-4 font-semibold">Nama Sub-Menu</th>
+                            <th class="p-3 font-semibold w-10 text-center">Urut</th>
+                            <th class="p-3 pl-2 font-semibold">Nama Sub-Menu</th>
                             <th class="p-3 font-semibold hidden md:table-cell">Tautan Tujuan</th>
                             <th class="p-3 font-semibold w-24 text-center">Aksi</th>
                         </tr>
@@ -455,8 +464,32 @@
 
     <script>
         // ==========================================
+        // 0. KEAMANAN DASAR (MENCEGAH VIEW SOURCE AWAM)
+        // ==========================================
+        // Memblokir klik kanan secara global
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Memblokir kombinasi keyboard inspect element populer
+        document.onkeydown = function(e) {
+            // F12
+            if (e.key === "F12" || e.keyCode === 123) {
+                return false;
+            }
+            // Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+U
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) {
+                return false;
+            }
+            if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) {
+                return false;
+            }
+        };
+
+        // ==========================================
         // 1. DATABASE & CONFIGURATION
         // ==========================================
+        // (Salin hasil dari Exporter ke sini nanti)
         let databaseConfig = {
             namaWebsite: "PORTAL LAYANAN TERPADU",
             instansi: "KANTOR KEMENTERIAN AGAMA KOTA SURAKARTA",
@@ -465,13 +498,11 @@
             backgroundUrl: "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
             logoUrl: "", // Biarkan kosong untuk menggunakan ikon default
             faviconUrl: "https://cdn-icons-png.flaticon.com/512/3004/3004122.png",
-            // Kontak Baru
             kontakPtsp: "081234567890",
             kontakPengaduan: "080987654321",
             jamLayanan: "07.30 sd 16.00 WIB"
         };
 
-        // Struktur menu dengan submenus
         let databaseMenu = [
             { 
                 id: "M01", nama: "PTSP KEMENAG", ikon: "fa-solid fa-tablet-screen-button text-orange-500", link: "#",
@@ -491,11 +522,24 @@
             { id: "M08", nama: "Standar Pelayanan", ikon: "fa-solid fa-clipboard-check text-green-600", link: "#", submenus: [] }
         ];
 
+        // Memperbarui UI Exporter Database setiap ada perubahan data
+        function updateDatabaseExporter() {
+            const codeOutput = `let databaseConfig = ${JSON.stringify(databaseConfig, null, 4)};\n\nlet databaseMenu = ${JSON.stringify(databaseMenu, null, 4)};`;
+            document.getElementById('db-exporter').value = codeOutput;
+        }
+
+        function copyDatabase() {
+            const dbText = document.getElementById('db-exporter');
+            dbText.select();
+            dbText.setSelectionRange(0, 99999); // Mobile
+            document.execCommand("copy");
+            showToast("Kode Database Berhasil Disalin!");
+        }
+
         // ==========================================
         // 2. RENDER SISTEM & KONFIGURASI
         // ==========================================
         function applyWebsiteConfig() {
-            // Terapkan Teks
             document.getElementById('page-title').textContent = `${databaseConfig.namaWebsite} - ${databaseConfig.instansi}`;
             document.getElementById('display-nama-web').textContent = databaseConfig.namaWebsite;
             document.getElementById('display-instansi').textContent = databaseConfig.instansi;
@@ -505,25 +549,21 @@
             document.getElementById('display-footer-tag').textContent = databaseConfig.footerTag;
             document.getElementById('page-favicon').href = databaseConfig.faviconUrl || "https://cdn-icons-png.flaticon.com/512/3004/3004122.png";
             
-            // Terapkan Informasi Kontak
             document.getElementById('display-kontak-ptsp').textContent = databaseConfig.kontakPtsp;
             document.getElementById('display-kontak-pengaduan').textContent = databaseConfig.kontakPengaduan;
             document.getElementById('display-jam-layanan').textContent = databaseConfig.jamLayanan;
             
-            // Latar Belakang Gedung
             if (databaseConfig.backgroundUrl) {
                 document.getElementById('body-bg').style.backgroundImage = `url('${databaseConfig.backgroundUrl}')`;
                 document.getElementById('login-bg').style.backgroundImage = `url('${databaseConfig.backgroundUrl}')`;
             }
 
-            // Manajemen Logo vs Ikon
             const imgLogo = document.getElementById('display-logo-img');
             const iconLogo = document.getElementById('display-logo-icon');
             const loginImgLogo = document.getElementById('login-logo-img');
             const loginIconLogo = document.getElementById('login-logo-icon');
             
             if (databaseConfig.logoUrl) {
-                // Tampilkan Logo Gambar, sembunyikan frame ikon bulat
                 imgLogo.src = databaseConfig.logoUrl;
                 imgLogo.classList.remove('hidden');
                 iconLogo.classList.add('hidden');
@@ -532,13 +572,14 @@
                 loginImgLogo.classList.remove('hidden');
                 loginIconLogo.classList.add('hidden');
             } else {
-                // Tampilkan ikon bulat jika logo URL kosong
                 imgLogo.classList.add('hidden');
                 iconLogo.classList.remove('hidden');
                 
                 loginImgLogo.classList.add('hidden');
                 loginIconLogo.classList.remove('hidden');
             }
+            
+            updateDatabaseExporter();
         }
 
         function renderMenu() {
@@ -550,8 +591,8 @@
                 const hasSub = (menu.submenus && menu.submenus.length > 0);
                 
                 card.href = hasSub ? "#" : menu.link; 
-                // Perubahan ukuran kotak agar proporsional dan presisi di HP (Padding dikecilkan p-3 md:p-4)
-                card.className = 'card-menu flex flex-col items-center justify-center p-3 md:p-4 rounded-xl border border-gray-200 text-center aspect-square focus:outline-none cursor-pointer relative';
+                // PERBAIKAN: Padding dikurangi (p-2 md:p-3), aspect-ratio dimodifikasi, agar kotak lebih kecil/presisi
+                card.className = 'card-menu flex flex-col items-center justify-center p-2 md:p-3 rounded-xl border border-gray-200 text-center aspect-[4/3] md:aspect-square focus:outline-none cursor-pointer relative';
                 card.setAttribute('aria-label', `Menu ${menu.nama}`);
                 
                 if (hasSub) {
@@ -561,14 +602,18 @@
                 }
 
                 card.innerHTML = `
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-gray-100 rounded-full flex items-center justify-center mb-2 md:mb-3 shadow-inner">
-                        <i class="${menu.ikon} text-2xl md:text-3xl" aria-hidden="true"></i>
+                    <!-- PERBAIKAN: Kontainer ikon dan teks ikon diperbesar (w-14 md:w-20, text-3xl md:text-4xl) -->
+                    <div class="w-14 h-14 md:w-20 md:h-20 bg-gray-100 rounded-full flex items-center justify-center mb-1.5 md:mb-2 shadow-inner">
+                        <i class="${menu.ikon} text-3xl md:text-4xl" aria-hidden="true"></i>
                     </div>
-                    <span class="text-xs md:text-sm font-semibold text-gray-800 leading-tight">${menu.nama}</span>
-                    ${hasSub ? '<span class="absolute top-2 right-2 md:top-3 md:right-3 text-gray-400 text-[10px] md:text-xs bg-gray-100 rounded-full w-5 h-5 md:w-6 md:h-6 flex items-center justify-center"><i class="fas fa-chevron-down"></i></span>' : ''}
+                    <!-- PERBAIKAN: Ukuran font disesuaikan, margin teks diatur ulang agar padat -->
+                    <span class="text-[11px] md:text-sm font-bold text-gray-800 leading-tight px-1">${menu.nama}</span>
+                    
+                    ${hasSub ? '<span class="absolute top-2 right-2 text-gray-400 bg-gray-100 rounded-full w-5 h-5 flex items-center justify-center text-[10px]"><i class="fas fa-chevron-down"></i></span>' : ''}
                 `;
                 gridContainer.appendChild(card);
             });
+            updateDatabaseExporter();
         }
 
         // ==========================================
@@ -598,10 +643,8 @@
             });
             modalPublicSubmenu.classList.remove('hidden');
         }
-
         function closePublicSubmenu() { modalPublicSubmenu.classList.add('hidden'); }
 
-        // Aksesibilitas
         const bodyEl = document.body;
         document.getElementById('btn-a11y-toggle').addEventListener('click', () => { document.getElementById('a11y-menu').classList.toggle('hidden'); });
         document.getElementById('btn-text-normal').addEventListener('click', () => bodyEl.classList.remove('text-large', 'text-xlarge'));
@@ -628,7 +671,6 @@
             document.getElementById('login-form').reset();
         });
 
-        // Toggle Password Icon
         document.getElementById('toggle-password').addEventListener('click', function(e) {
             e.preventDefault();
             const pw = document.getElementById('password');
@@ -636,7 +678,6 @@
             document.getElementById('eye-icon').className = pw.type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
         });
 
-        // Verifikasi Login Form
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const err = document.getElementById('error-message');
@@ -664,7 +705,6 @@
             }, 800);
         });
 
-        // Tab Navigasi Admin
         document.getElementById('tab-menu').addEventListener('click', () => {
             document.getElementById('admin-menu-section').classList.replace('hidden', 'block');
             document.getElementById('admin-setting-section').classList.replace('block', 'hidden');
@@ -693,7 +733,6 @@
                 tr.draggable = true;
                 tr.dataset.index = index;
                 
-                // Event Drag and Drop untuk mengurutkan posisi Menu
                 tr.addEventListener('dragstart', handleDragStart);
                 tr.addEventListener('dragover', handleDragOver);
                 tr.addEventListener('drop', handleDrop);
@@ -715,9 +754,9 @@
                 `;
                 adminTableBody.appendChild(tr);
             });
+            updateDatabaseExporter();
         }
 
-        // --- Logika Drag and Drop Menu Utama ---
         function handleDragStart(e) {
             dragStartIndex = +e.target.closest('tr').dataset.index;
             e.dataTransfer.effectAllowed = 'move';
@@ -739,21 +778,19 @@
             const dragEndIndex = +e.target.closest('tr').dataset.index;
             e.target.closest('tr').classList.remove('tr-drag-over');
             
-            // Lakukan penukaran (swap) data pada array
-            if (dragStartIndex !== dragEndIndex) {
+            if (dragStartIndex !== dragEndIndex && dragStartIndex !== null) {
                 const itemToMove = databaseMenu[dragStartIndex];
                 databaseMenu.splice(dragStartIndex, 1);
                 databaseMenu.splice(dragEndIndex, 0, itemToMove);
                 
                 renderAdminTable(); 
-                renderMenu(); // Tampilkan update urutan ke halaman depan
+                renderMenu(); 
                 showToast("Urutan Menu berhasil diperbarui!");
             }
+            dragStartIndex = null;
             return false;
         }
-        // --- Selesai Drag and Drop ---
 
-        // Modal Form Menu Utama
         const modalForm = document.getElementById('modal-form');
         document.getElementById('menu-ikon').addEventListener('input', (e) => {
             const val = e.target.value.trim();
@@ -802,20 +839,20 @@
         });
 
         // ==========================================
-        // 6. MANAJEMEN SUB-MENU (ADMIN)
+        // 6. MANAJEMEN SUB-MENU (ADMIN) + DRAG & DROP
         // ==========================================
         const modalAdminSubmenu = document.getElementById('modal-admin-submenu');
         const formAdminSubmenu = document.getElementById('form-admin-submenu');
         const btnCancelSub = document.getElementById('btn-cancel-submenu');
         const btnSubmitSub = document.getElementById('btn-submit-submenu');
         let currentParentMenuId = null;
+        let dragSubStartIndex = null; // Khusus untuk Sub-Menu
 
         function resetSubmenuForm() {
             formAdminSubmenu.reset();
-            document.getElementById('submenu-id').value = ""; // Pastikan ID kosong menandakan mode Tambah
+            document.getElementById('submenu-id').value = ""; 
             btnCancelSub.classList.add('hidden');
             
-            // Ganti Indikator UI ke Mode Tambah
             btnSubmitSub.innerHTML = 'Simpan Baru';
             btnSubmitSub.classList.replace('bg-green-600', 'bg-indigo-600');
             btnSubmitSub.classList.replace('hover:bg-green-700', 'hover:bg-indigo-700');
@@ -845,15 +882,27 @@
             
             const menu = databaseMenu.find(m => m.id === currentParentMenuId);
             if (!menu.submenus || menu.submenus.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" class="p-6 text-center text-gray-500 italic bg-gray-50">Belum ada sub-menu. Silakan tambahkan form di atas.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-gray-500 italic bg-gray-50">Belum ada sub-menu. Silakan tambahkan form di atas.</td></tr>`;
+                updateDatabaseExporter();
                 return;
             }
 
-            menu.submenus.forEach(sub => {
+            menu.submenus.forEach((sub, index) => {
                 const tr = document.createElement('tr');
-                tr.className = "hover:bg-indigo-50/30 border-b border-gray-100 transition-colors";
+                tr.className = "hover:bg-indigo-50/30 border-b border-gray-100 transition-colors tr-draggable";
+                tr.draggable = true;
+                tr.dataset.subindex = index;
+
+                // Event Listener untuk Fitur Drag & Drop Sub-Menu
+                tr.addEventListener('dragstart', handleSubDragStart);
+                tr.addEventListener('dragover', handleSubDragOver);
+                tr.addEventListener('drop', handleSubDrop);
+                tr.addEventListener('dragenter', handleSubDragEnter);
+                tr.addEventListener('dragleave', handleSubDragLeave);
+
                 tr.innerHTML = `
-                    <td class="p-3 pl-4 font-medium text-gray-800">${sub.nama}</td>
+                    <td class="p-3 text-center text-gray-400 hover:text-gray-600" title="Geser untuk mengurutkan"><i class="fas fa-grip-vertical text-sm"></i></td>
+                    <td class="p-3 pl-2 font-medium text-gray-800">${sub.nama}</td>
                     <td class="p-3 text-xs text-blue-600 hidden md:table-cell truncate max-w-[150px]">${sub.link}</td>
                     <td class="p-3">
                         <div class="flex items-center justify-center gap-2">
@@ -864,24 +913,56 @@
                 `;
                 tbody.appendChild(tr);
             });
-            renderAdminTable(); // Update Badge Count di Parent Menu
-            renderMenu(); // Update Front End
+            renderAdminTable(); 
+            renderMenu(); 
         }
 
-        // Tombol Edit pada Baris Sub-Menu (Memuat Data ke Form)
+        // --- Logika Drag and Drop Sub-Menu ---
+        function handleSubDragStart(e) {
+            dragSubStartIndex = +e.target.closest('tr').dataset.subindex;
+            e.dataTransfer.effectAllowed = 'move';
+            e.target.closest('tr').classList.add('tr-dragging');
+        }
+        function handleSubDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+        function handleSubDragEnter(e) { e.target.closest('tr').classList.add('tr-drag-over'); }
+        function handleSubDragLeave(e) { e.target.closest('tr').classList.remove('tr-drag-over'); }
+        
+        function handleSubDrop(e) {
+            e.stopPropagation();
+            const dragSubEndIndex = +e.target.closest('tr').dataset.subindex;
+            e.target.closest('tr').classList.remove('tr-drag-over');
+            
+            if (dragSubStartIndex !== dragSubEndIndex && dragSubStartIndex !== null) {
+                const parentMenuIndex = databaseMenu.findIndex(m => m.id === currentParentMenuId);
+                const submenusArray = databaseMenu[parentMenuIndex].submenus;
+                
+                // Swap posisi array
+                const itemToMove = submenusArray[dragSubStartIndex];
+                submenusArray.splice(dragSubStartIndex, 1);
+                submenusArray.splice(dragSubEndIndex, 0, itemToMove);
+                
+                renderAdminSubmenuList(); 
+                showToast("Urutan Sub-Menu berhasil diperbarui!");
+            }
+            dragSubStartIndex = null;
+            return false;
+        }
+
         function editSubmenu(subId) {
             const menu = databaseMenu.find(m => m.id === currentParentMenuId);
             const sub = menu.submenus.find(s => s.id === subId);
             
             if(sub) {
-                document.getElementById('submenu-id').value = sub.id; // Menyimpan ID menandakan kita sedang UPDATE data
+                document.getElementById('submenu-id').value = sub.id; 
                 document.getElementById('submenu-nama').value = sub.nama;
                 document.getElementById('submenu-link').value = sub.link;
                 
-                // Tampilkan tombol Batal
                 btnCancelSub.classList.remove('hidden');
                 
-                // Ubah Indikator UI ke Mode Edit
                 btnSubmitSub.innerHTML = '<i class="fas fa-save mr-1"></i> Update Data';
                 btnSubmitSub.classList.replace('bg-indigo-600', 'bg-green-600');
                 btnSubmitSub.classList.replace('hover:bg-indigo-700', 'hover:bg-green-700');
@@ -892,41 +973,36 @@
             }
         }
 
-        // Batalkan Mode Edit Sub-Menu (Kembali ke Mode Tambah)
         btnCancelSub.addEventListener('click', resetSubmenuForm);
 
-        // Aksi Submit Form Sub-Menu (Menangani Tambah & Update)
         formAdminSubmenu.addEventListener('submit', (e) => {
             e.preventDefault();
             const parentId = document.getElementById('submenu-parent-id').value;
-            const subId = document.getElementById('submenu-id').value; // Ambil nilai ID tersembunyi
+            const subId = document.getElementById('submenu-id').value; 
             
             const menuIdx = databaseMenu.findIndex(m => m.id === parentId);
             if(!databaseMenu[menuIdx].submenus) databaseMenu[menuIdx].submenus = [];
 
             const newSub = {
-                id: subId || "S" + Date.now().toString().slice(-5), // Gunakan ID lama jika Edit, buat baru jika Tambah
+                id: subId || "S" + Date.now().toString().slice(-5), 
                 nama: document.getElementById('submenu-nama').value.trim(),
                 link: document.getElementById('submenu-link').value.trim()
             };
 
             if (subId !== "") {
-                // Proses Update (Edit)
                 const subIdx = databaseMenu[menuIdx].submenus.findIndex(s => s.id === subId);
                 if(subIdx !== -1) {
                     databaseMenu[menuIdx].submenus[subIdx] = newSub;
                     showToast("Sub-menu berhasil diperbarui!");
                 }
             } else {
-                // Proses Tambah Baru
                 databaseMenu[menuIdx].submenus.push(newSub);
                 showToast("Sub-menu baru berhasil ditambahkan!");
             }
 
-            resetSubmenuForm(); // Bersihkan form
-            renderAdminSubmenuList(); // Render ulang tabel
+            resetSubmenuForm(); 
+            renderAdminSubmenuList(); 
         });
-
 
         // ==========================================
         // 7. SISTEM HAPUS (DELETE MODAL)
@@ -950,7 +1026,7 @@
             } else if (deleteContext === 'submenu') {
                 const menuIdx = databaseMenu.findIndex(m => m.id === currentParentMenuId);
                 databaseMenu[menuIdx].submenus = databaseMenu[menuIdx].submenus.filter(s => s.id !== deleteTargetId);
-                renderAdminSubmenuList(); // Ini akan otomatis render front end & admin table parentnya
+                renderAdminSubmenuList(); 
             }
             closeDeleteModal();
             showToast(deleteContext === 'menu' ? "Menu utama dihapus!" : "Sub-menu dihapus!", "error");
@@ -987,7 +1063,7 @@
             databaseConfig.kontakPengaduan = document.getElementById('set-kontak-pengaduan').value.trim();
             databaseConfig.jamLayanan = document.getElementById('set-jam-layanan').value.trim();
             
-            applyWebsiteConfig(); // Segera terapkan ke halaman depan (Live update)
+            applyWebsiteConfig(); 
             showToast("Pengaturan sistem berhasil disimpan!");
         });
 
