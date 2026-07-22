@@ -24,12 +24,12 @@
             flex-direction: column;
         }
 
-        /* Latar Belakang Utama (Diatur via JS nantinya) */
+        /* Latar Belakang Utama */
         .bg-gedung {
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            background-color: #0f172a; /* Fallback color */
+            background-color: #0f172a; 
         }
 
         .overlay {
@@ -39,10 +39,11 @@
             flex-direction: column;
         }
 
+        /* Mode Aksesibilitas Kontras Tinggi */
         body.high-contrast .bg-gedung { background-image: none !important; background-color: #000000 !important; }
         body.high-contrast .overlay { background-color: transparent !important; }
         body.high-contrast * { color: #ffff00 !important; border-color: #ffff00 !important; }
-        body.high-contrast .card-menu { background-color: #1a1a1a !important; border: 2px solid #ffff00 !important; box-shadow: none; }
+        body.high-contrast .card-menu, body.high-contrast .modal-bg { background-color: #1a1a1a !important; border: 2px solid #ffff00 !important; box-shadow: none; }
         body.high-contrast .card-menu i { color: #ffff00 !important; }
         body.high-contrast .btn-pill { background-color: #000 !important; border: 2px solid #ffff00 !important; }
         body.high-contrast .accessibility-btn { background-color: #ffff00 !important; color: #000 !important; }
@@ -67,7 +68,7 @@
             outline-offset: 2px;
         }
 
-        /* Login Screen specific */
+        /* Layar Login */
         .bg-gedung-blur {
             background-size: cover;
             background-position: center;
@@ -103,7 +104,7 @@
     <!-- ==================== LANDING PAGE ==================== -->
     <div id="landing-page" class="overlay relative pb-10 transition-opacity duration-300">
         
-        <!-- Tagline Animasi Berjalan (Marquee) -->
+        <!-- Tagline Animasi Berjalan -->
         <div class="w-full bg-black/40 backdrop-blur-sm border-b border-white/10 text-white py-1.5 px-4 overflow-hidden relative z-40">
             <marquee id="display-tagline" class="text-xs md:text-sm font-medium tracking-wide" scrollamount="5">
                 <!-- Teks diisi via JS -->
@@ -112,10 +113,9 @@
 
         <!-- Tombol Aksesibilitas Melayang -->
         <div class="fixed top-16 right-4 z-50 flex flex-col items-end">
-            <button id="btn-a11y-toggle" class="accessibility-btn bg-blue-600 hover:bg-blue-700 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg focus:ring-2 focus:ring-white transition-colors" aria-label="Buka Menu Aksesibilitas" aria-expanded="false">
+            <button id="btn-a11y-toggle" class="accessibility-btn bg-blue-600 hover:bg-blue-700 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg focus:ring-2 focus:ring-white transition-colors" aria-label="Buka Menu Aksesibilitas">
                 <i class="fas fa-universal-access text-xl"></i>
             </button>
-            
             <div id="a11y-menu" class="accessibility-menu hidden mt-2 bg-white rounded-lg shadow-xl p-3 w-48 border border-gray-200">
                 <p class="text-xs font-bold text-gray-700 mb-2 border-b pb-1 text-center">Aksesibilitas</p>
                 <div class="flex flex-col space-y-2">
@@ -130,8 +130,6 @@
 
         <!-- HEADER -->
         <header class="w-full flex flex-col items-center justify-center pt-8 pb-6 px-4 text-center">
-            
-            <!-- Logo Web Dinamis -->
             <div id="display-logo-container" class="w-24 h-24 bg-white/90 rounded-full flex items-center justify-center shadow-lg mb-4 p-2 backdrop-blur-sm border-2 border-white/20 overflow-hidden">
                 <img id="display-logo-img" src="" alt="Logo Instansi" class="w-full h-full object-contain hidden">
                 <i id="display-logo-icon" class="fas fa-star-and-crescent text-5xl text-green-700"></i>
@@ -141,17 +139,8 @@
                 PORTAL LAYANAN TERPADU
             </h1>
             <h2 id="display-instansi" class="text-lg md:text-xl font-medium text-gray-200 mt-2 max-w-2xl drop-shadow-md">
-                KANTOR KEMENTERIAN AGAMA KOTA SURAKARTA
+                KANTOR KEMENTERIAN AGAMA
             </h2>
-
-            <div class="flex flex-wrap justify-center gap-3 mt-6">
-                <a href="#" class="btn-pill bg-teal-500 hover:bg-teal-600 text-white px-5 py-1.5 rounded-full text-sm font-semibold shadow transition focus:ring-2 focus:ring-white">
-                    Website Utama
-                </a>
-                <a href="#" class="btn-pill bg-teal-500 hover:bg-teal-600 text-white px-5 py-1.5 rounded-full text-sm font-semibold shadow transition focus:ring-2 focus:ring-white">
-                    Hasil Survey
-                </a>
-            </div>
         </header>
 
         <!-- MAIN MENU GRID -->
@@ -165,20 +154,40 @@
         <footer class="mt-auto pt-8 pb-4 px-4 text-center">
             <div class="flex justify-center items-center mb-3">
                 <span id="display-footer-tag" class="bg-green-600 text-white px-3 py-1 rounded text-sm font-bold shadow-md">
-                    <i class="fas fa-heart mr-1"></i> SURAKARTA BERKAH
+                    MELAYANI DENGAN SEPENUH HATI
                 </span>
             </div>
             <p class="text-xs text-gray-300 drop-shadow-md">
-                Copyright &copy; 2026 <span id="display-footer-instansi">KANTOR KEMENTERIAN AGAMA KOTA SURAKARTA</span>.<br>
+                Copyright &copy; 2026 <span id="display-footer-instansi">INSTANSI</span>.<br>
                 All Rights Reserved.
             </p>
-            
             <div class="mt-4 flex justify-center">
-                <a href="#" id="link-open-login" class="inline-flex items-center text-[10px] text-gray-400 hover:text-white transition-colors bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-yellow-400" aria-label="Halaman Login Admin">
+                <a href="#" id="link-open-login" class="inline-flex items-center text-[10px] text-gray-400 hover:text-white transition-colors bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-yellow-400" title="Login Administrator">
                     <i class="fas fa-lock mr-1.5"></i> Login Pengelola
                 </a>
             </div>
         </footer>
+    </div>
+
+    <!-- ==================== MODAL TAMPILAN SUB-MENU PUBLIK ==================== -->
+    <div id="modal-public-submenu" class="hidden fixed inset-0 z-[150] flex items-center justify-center">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="closePublicSubmenu()"></div>
+        <div class="modal-bg bg-white rounded-xl shadow-2xl z-10 w-full max-w-md mx-4 overflow-hidden transform transition-all">
+            <div class="bg-teal-700 p-4 text-white flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div id="public-submenu-icon" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"></div>
+                    <h3 id="public-submenu-title" class="font-bold text-lg uppercase tracking-wide">Pilih Layanan</h3>
+                </div>
+                <button onclick="closePublicSubmenu()" class="text-teal-100 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white rounded">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="p-2 max-h-[60vh] overflow-y-auto bg-gray-50">
+                <ul id="public-submenu-list" class="space-y-1">
+                    <!-- List sub menu dirender JS -->
+                </ul>
+            </div>
+        </div>
     </div>
 
     <!-- ==================== HALAMAN LOGIN ADMIN ==================== -->
@@ -189,50 +198,38 @@
         <main class="w-full max-w-md px-4 py-8 z-10 relative">
             <div class="glass-card rounded-2xl overflow-hidden shadow-2xl">
                 <div class="bg-gradient-to-r from-green-800 to-green-600 p-8 text-center text-white relative">
-                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg mx-auto mb-4 border-4 border-green-500/30">
-                        <i class="fas fa-user-shield text-4xl text-green-700"></i>
+                    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg mx-auto mb-4 border-4 border-green-500/30 overflow-hidden">
+                        <img id="login-logo-img" src="" alt="Logo Instansi" class="w-full h-full object-contain hidden">
+                        <i id="login-logo-icon" class="fas fa-user-shield text-4xl text-green-700"></i>
                     </div>
                     <h1 class="text-2xl font-bold tracking-wide">PORTAL ADMIN</h1>
-                    <p class="text-green-100 text-sm mt-1" id="login-instansi">Kemenag Kota Surakarta</p>
+                    <p class="text-green-100 text-sm mt-1" id="login-instansi">Sistem Pengelola</p>
                 </div>
 
                 <div class="p-8">
-                    <div id="error-message" class="hidden bg-red-50 border-l-4 border-red-500 text-red-700 p-3 mb-6 rounded text-sm transition-all flex items-start" role="alert">
+                    <div id="error-message" class="hidden bg-red-50 border-l-4 border-red-500 text-red-700 p-3 mb-6 rounded text-sm flex items-start">
                         <i class="fas fa-exclamation-circle mt-0.5 mr-2"></i>
-                        <div>
-                            <p class="font-bold">Gagal Masuk</p>
-                            <p id="error-text" class="text-xs mt-1">Username atau password salah.</p>
-                        </div>
+                        <div><p class="font-bold">Gagal Masuk</p><p id="error-text" class="text-xs mt-1">Username/password salah.</p></div>
                     </div>
 
-                    <form id="login-form" novalidate>
+                    <form id="login-form">
                         <div class="mb-5">
-                            <label for="username" class="block text-sm font-semibold text-gray-700 mb-1.5">Username Administrator</label>
-                            <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500 focus-within:ring-1 focus-within:ring-green-500 transition-colors bg-gray-50">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-                                    <i class="fas fa-id-badge"></i>
-                                </div>
-                                <input type="text" id="username" name="username" class="w-full pl-10 pr-4 py-3 bg-transparent rounded-lg border-none focus:ring-0 text-gray-700 placeholder-gray-400" placeholder="Masukkan username" required autocomplete="username">
+                            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Username Administrator</label>
+                            <div class="relative border border-gray-300 rounded-lg bg-gray-50">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"><i class="fas fa-id-badge"></i></div>
+                                <input type="text" id="username" class="w-full pl-10 pr-4 py-3 bg-transparent border-none outline-none focus:ring-1 focus:ring-green-500 rounded-lg" required>
                             </div>
                         </div>
-
                         <div class="mb-6">
-                            <label for="password" class="block text-sm font-semibold text-gray-700 mb-1.5">Kata Sandi</label>
-                            <div class="relative border border-gray-300 rounded-lg focus-within:border-green-500 focus-within:ring-1 focus-within:ring-green-500 transition-colors bg-gray-50">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-                                    <i class="fas fa-key"></i>
-                                </div>
-                                <input type="password" id="password" name="password" class="w-full pl-10 pr-12 py-3 bg-transparent rounded-lg border-none focus:ring-0 text-gray-700 placeholder-gray-400" placeholder="Masukkan kata sandi" required autocomplete="current-password">
-                                
-                                <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-green-600 focus:outline-none transition-colors" aria-label="Tampilkan kata sandi">
-                                    <i class="fas fa-eye" id="eye-icon"></i>
-                                </button>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Kata Sandi</label>
+                            <div class="relative border border-gray-300 rounded-lg bg-gray-50">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"><i class="fas fa-key"></i></div>
+                                <input type="password" id="password" class="w-full pl-10 pr-12 py-3 bg-transparent border-none outline-none focus:ring-1 focus:ring-green-500 rounded-lg" required>
+                                <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-green-600"><i class="fas fa-eye" id="eye-icon"></i></button>
                             </div>
                         </div>
-
-                        <button type="submit" id="btn-submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 px-4 rounded-lg shadow-md hover:shadow-lg transition-all flex justify-center items-center group">
+                        <button type="submit" id="btn-submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 px-4 rounded-lg shadow-md transition-all flex justify-center items-center">
                             <span id="btn-text">MASUK KE DASHBOARD</span>
-                            <i id="btn-icon" class="fas fa-sign-in-alt ml-2 group-hover:translate-x-1 transition-transform"></i>
                             <i id="btn-spinner" class="fas fa-circle-notch fa-spin hidden ml-2"></i>
                         </button>
                     </form>
@@ -240,7 +237,7 @@
             </div>
             
             <div class="text-center mt-6">
-                <a href="#" id="link-back-landing" class="inline-flex items-center text-sm text-green-100 hover:text-white transition-colors py-2 px-5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 shadow-sm">
+                <a href="#" id="link-back-landing" class="inline-flex items-center text-sm text-green-100 hover:text-white py-2 px-5 rounded-full bg-white/10 border border-white/20">
                     <i class="fas fa-arrow-left mr-2"></i> Kembali ke Halaman Utama
                 </a>
             </div>
@@ -249,61 +246,48 @@
 
     <!-- ==================== DASHBOARD PANEL ADMIN ==================== -->
     <div id="dashboard-page" class="hidden fixed inset-0 z-[100] bg-gray-50 flex flex-col h-screen overflow-hidden">
-        
-        <!-- Header Dashboard -->
         <header class="bg-green-800 text-white shadow-md z-10 flex flex-col">
             <div class="p-4 flex justify-between items-center">
                 <div class="flex items-center font-bold text-lg">
                     <i class="fas fa-user-shield mr-3 text-2xl text-yellow-400"></i>
                     <div>
                         <span class="block">Panel Administrasi</span>
-                        <span class="text-xs font-normal text-green-200">Mode Pengembang</span>
+                        <span class="text-xs font-normal text-green-200">Mode Pengelola</span>
                     </div>
                 </div>
-                <button id="btn-logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-sm font-semibold transition-colors flex items-center shadow focus:ring-2 focus:ring-white">
+                <button id="btn-logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-sm font-semibold transition-colors flex items-center shadow">
                     <i class="fas fa-sign-out-alt mr-2"></i> Keluar
                 </button>
             </div>
-            
-            <!-- Dashboard Tabs -->
             <div class="flex px-4 bg-green-900 border-t border-green-700">
-                <button id="tab-menu" class="px-5 py-3 text-sm font-semibold border-b-2 border-yellow-400 text-white transition-colors">
-                    <i class="fas fa-th-large mr-2"></i> Manajemen Menu
-                </button>
-                <button id="tab-pengaturan" class="px-5 py-3 text-sm font-medium border-b-2 border-transparent text-green-300 hover:text-white transition-colors">
-                    <i class="fas fa-cog mr-2"></i> Pengaturan Website
-                </button>
+                <button id="tab-menu" class="px-5 py-3 text-sm font-semibold border-b-2 border-yellow-400 text-white transition-colors"><i class="fas fa-th-large mr-2"></i> Manajemen Menu</button>
+                <button id="tab-pengaturan" class="px-5 py-3 text-sm font-medium border-b-2 border-transparent text-green-300 hover:text-white transition-colors"><i class="fas fa-cog mr-2"></i> Pengaturan Website</button>
             </div>
         </header>
 
-        <!-- Area Konten Utama Dashboard -->
         <div class="flex-grow overflow-y-auto p-4 md:p-8">
-            
             <!-- TAB 1: MANAJEMEN MENU -->
             <div id="admin-menu-section" class="max-w-6xl mx-auto bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden block">
-                <div class="p-6 border-b border-gray-200 bg-gray-50 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="p-6 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
                     <div>
                         <h2 class="text-xl font-bold text-gray-800">Daftar Menu Layanan</h2>
-                        <p class="text-sm text-gray-500 mt-1">Atur kartu menu yang ditampilkan pada halaman utama Portal.</p>
+                        <p class="text-sm text-gray-500 mt-1">Kelola menu utama dan buat sub-menu (layanan spesifik).</p>
                     </div>
-                    <button onclick="openMenuModal()" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-md transition-colors flex items-center">
+                    <button onclick="openMenuModal()" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-md flex items-center">
                         <i class="fas fa-plus mr-2"></i> Tambah Menu
                     </button>
                 </div>
-
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-gray-100 text-gray-700 uppercase text-xs tracking-wider border-b">
                                 <th class="p-4 font-semibold w-20 text-center">Ikon</th>
-                                <th class="p-4 font-semibold">Nama Layanan</th>
-                                <th class="p-4 font-semibold">Tautan (Link)</th>
-                                <th class="p-4 font-semibold w-32 text-center">Aksi</th>
+                                <th class="p-4 font-semibold">Nama Layanan Utama</th>
+                                <th class="p-4 font-semibold">Tautan Utama</th>
+                                <th class="p-4 font-semibold text-center w-40">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="admin-table-body" class="divide-y divide-gray-200">
-                            <!-- Baris tabel dirender JavaScript -->
-                        </tbody>
+                        <tbody id="admin-table-body" class="divide-y divide-gray-200"></tbody>
                     </table>
                 </div>
             </div>
@@ -312,415 +296,528 @@
             <div id="admin-setting-section" class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hidden">
                 <div class="p-6 border-b border-gray-200 bg-gray-50">
                     <h2 class="text-xl font-bold text-gray-800">Pengaturan Identitas Website</h2>
-                    <p class="text-sm text-gray-500 mt-1">Konfigurasi ini ibarat mengedit file <code>database/config.json</code>.</p>
                 </div>
-
                 <form id="settings-form" class="p-6 space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Group 1: Identitas -->
                         <div class="space-y-4">
                             <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider border-b pb-2">Informasi Instansi</h3>
-                            
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1">Judul/Nama Website Utama</label>
-                                <input type="text" id="set-nama-web" class="w-full border border-gray-300 rounded px-3 py-2 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none" required>
-                            </div>
-                            
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Instansi/Lembaga</label>
-                                <input type="text" id="set-instansi" class="w-full border border-gray-300 rounded px-3 py-2 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none" required>
-                            </div>
-                            
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1">Teks Pendek (Badge Footer)</label>
-                                <input type="text" id="set-footer-tag" class="w-full border border-gray-300 rounded px-3 py-2 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none">
-                            </div>
+                            <div><label class="block text-sm font-semibold text-gray-700 mb-1">Judul/Nama Website</label><input type="text" id="set-nama-web" class="w-full border rounded px-3 py-2 outline-none focus:border-green-500" required></div>
+                            <div><label class="block text-sm font-semibold text-gray-700 mb-1">Nama Instansi/Lembaga</label><input type="text" id="set-instansi" class="w-full border rounded px-3 py-2 outline-none focus:border-green-500" required></div>
+                            <div><label class="block text-sm font-semibold text-gray-700 mb-1">Teks Badge Footer</label><input type="text" id="set-footer-tag" class="w-full border rounded px-3 py-2 outline-none focus:border-green-500"></div>
                         </div>
-
-                        <!-- Group 2: Media & Visual -->
                         <div class="space-y-4">
-                            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider border-b pb-2">Media & Visual (URL / Link)</h3>
-                            
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1">Tagline Animasi (Bergerak)</label>
-                                <textarea id="set-tagline" rows="2" class="w-full border border-gray-300 rounded px-3 py-2 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none"></textarea>
-                                <p class="text-[10px] text-gray-400 mt-1">Muncul di atas header dalam bentuk teks berjalan.</p>
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1">URL Latar Belakang (Gedung)</label>
-                                <input type="url" id="set-bg-url" class="w-full border border-gray-300 rounded px-3 py-2 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none text-sm font-mono text-gray-600" placeholder="https://...">
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1">URL Logo Instansi <span class="text-xs font-normal text-gray-500">(Kosongkan untuk ikon default)</span></label>
-                                <input type="url" id="set-logo-url" class="w-full border border-gray-300 rounded px-3 py-2 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none text-sm font-mono text-gray-600" placeholder="https://...">
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-1">URL Favicon (Icon Tab Browser)</label>
-                                <input type="url" id="set-favicon" class="w-full border border-gray-300 rounded px-3 py-2 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none text-sm font-mono text-gray-600" placeholder="https://...">
-                            </div>
+                            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider border-b pb-2">Media & Visual (URL)</h3>
+                            <div><label class="block text-sm font-semibold text-gray-700 mb-1">Tagline Animasi</label><textarea id="set-tagline" rows="2" class="w-full border rounded px-3 py-2 outline-none focus:border-green-500"></textarea></div>
+                            <div><label class="block text-sm font-semibold text-gray-700 mb-1">URL Latar Belakang</label><input type="url" id="set-bg-url" class="w-full border rounded px-3 py-2 font-mono text-sm outline-none focus:border-green-500"></div>
+                            <div><label class="block text-sm font-semibold text-gray-700 mb-1">URL Logo <span class="text-xs font-normal text-gray-500">(Kosong=Icon)</span></label><input type="url" id="set-logo-url" class="w-full border rounded px-3 py-2 font-mono text-sm outline-none focus:border-green-500"></div>
+                            <div><label class="block text-sm font-semibold text-gray-700 mb-1">URL Favicon</label><input type="url" id="set-favicon" class="w-full border rounded px-3 py-2 font-mono text-sm outline-none focus:border-green-500"></div>
                         </div>
                     </div>
-
-                    <div class="pt-6 border-t border-gray-100 flex justify-end">
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-bold shadow-md transition-colors flex items-center">
-                            <i class="fas fa-save mr-2"></i> Simpan Pengaturan
-                        </button>
+                    <div class="pt-6 border-t flex justify-end">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-bold shadow flex items-center"><i class="fas fa-save mr-2"></i> Simpan Pengaturan</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- ==================== MODAL TAMBAH/EDIT MENU ==================== -->
+    <!-- MODAL EDIT MENU UTAMA -->
     <div id="modal-form" class="hidden fixed inset-0 z-[200] flex items-center justify-center">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="closeMenuModal()"></div>
-        <div class="bg-white rounded-xl shadow-2xl z-10 w-full max-w-md mx-4 overflow-hidden transform transition-all scale-100">
+        <div class="bg-white rounded-xl shadow-2xl z-10 w-full max-w-md mx-4 overflow-hidden">
             <div class="bg-green-700 p-4 text-white flex justify-between items-center">
                 <h3 id="modal-title" class="font-bold text-lg">Tambah Menu Baru</h3>
-                <button onclick="closeMenuModal()" class="text-green-100 hover:text-white focus:outline-none transition-colors">
-                    <i class="fas fa-times text-xl"></i>
-                </button>
+                <button onclick="closeMenuModal()" class="text-green-100 hover:text-white"><i class="fas fa-times text-xl"></i></button>
             </div>
             <form id="menu-form" class="p-6">
                 <input type="hidden" id="menu-id">
-                
+                <div class="mb-4"><label class="block text-sm font-semibold text-gray-700 mb-1">Nama Layanan Utama</label><input type="text" id="menu-nama" required class="w-full border rounded px-3 py-2 outline-none focus:ring-1 focus:ring-green-500"></div>
                 <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Layanan</label>
-                    <input type="text" id="menu-nama" required class="w-full border border-gray-300 rounded px-3 py-2 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition-shadow" placeholder="Contoh: PTSP Kemenag">
-                </div>
-                
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Class Ikon (FontAwesome / Image URL)</label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Class Ikon</label>
                     <div class="flex gap-2">
-                        <input type="text" id="menu-ikon" required class="w-full border border-gray-300 rounded px-3 py-2 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none font-mono text-sm transition-shadow" placeholder="fa-solid fa-tablet text-orange-500">
-                        <div id="icon-preview" class="w-12 h-10 flex-shrink-0 border border-gray-300 rounded bg-gray-50 flex items-center justify-center text-lg shadow-inner">
-                            <i class="fas fa-question text-gray-400"></i>
-                        </div>
+                        <input type="text" id="menu-ikon" required class="w-full border rounded px-3 py-2 font-mono text-sm outline-none focus:ring-1 focus:ring-green-500" placeholder="fa-solid fa-home text-blue-500">
+                        <div id="icon-preview" class="w-12 h-10 border rounded bg-gray-50 flex items-center justify-center text-lg"><i class="fas fa-question text-gray-400"></i></div>
                     </div>
-                    <p class="text-xs text-gray-500 mt-1">Gunakan class Tailwind untuk warna (misal: text-blue-500).</p>
                 </div>
-
                 <div class="mb-6">
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Tautan URL (Link Tujuan)</label>
-                    <input type="text" id="menu-link" required class="w-full border border-gray-300 rounded px-3 py-2 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition-shadow" placeholder="https://... atau #">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Tautan Utama <span class="font-normal text-gray-400 text-xs">(Jika tidak punya sub-menu)</span></label>
+                    <input type="text" id="menu-link" required class="w-full border rounded px-3 py-2 outline-none focus:ring-1 focus:ring-green-500" placeholder="https:// atau #">
                 </div>
-
                 <div class="flex justify-end gap-3">
-                    <button type="button" onclick="closeMenuModal()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded font-medium transition-colors">Batal</button>
-                    <button type="submit" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded font-medium transition-colors shadow">Simpan Data</button>
+                    <button type="button" onclick="closeMenuModal()" class="px-4 py-2 bg-gray-200 text-gray-800 rounded font-medium">Batal</button>
+                    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded font-medium shadow">Simpan</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- ==================== MODAL KONFIRMASI HAPUS ==================== -->
-    <div id="modal-delete" class="hidden fixed inset-0 z-[200] flex items-center justify-center">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="closeDeleteModal()"></div>
-        <div class="bg-white rounded-xl shadow-2xl z-10 w-full max-w-sm mx-4 p-6 text-center transform transition-all scale-100">
-            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 text-red-600 text-3xl shadow-inner">
-                <i class="fas fa-exclamation-triangle"></i>
+    <!-- MODAL KELOLA SUB-MENU (ADMIN) -->
+    <div id="modal-admin-submenu" class="hidden fixed inset-0 z-[250] flex items-center justify-center">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="closeAdminSubmenu()"></div>
+        <div class="bg-white rounded-xl shadow-2xl z-10 w-full max-w-2xl mx-4 overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-indigo-700 p-4 text-white flex justify-between items-center shrink-0">
+                <h3 class="font-bold text-lg"><i class="fas fa-list-ul mr-2"></i> Sub-Menu: <span id="admin-submenu-parent-name" class="text-yellow-300"></span></h3>
+                <button onclick="closeAdminSubmenu()" class="text-indigo-100 hover:text-white"><i class="fas fa-times text-xl"></i></button>
             </div>
-            <h3 class="font-bold text-xl text-gray-800 mb-2">Hapus Menu?</h3>
-            <p class="text-gray-600 text-sm mb-6">Apakah Anda yakin ingin menghapus menu <strong id="delete-target-name"></strong>? Tindakan ini tidak dapat dibatalkan.</p>
             
-            <div class="flex justify-center gap-3">
-                <button onclick="closeDeleteModal()" class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium transition-colors w-full">Batal</button>
-                <button id="btn-confirm-delete" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors w-full shadow">Ya, Hapus</button>
+            <div class="p-4 bg-indigo-50 border-b shrink-0">
+                <form id="form-admin-submenu" class="flex flex-col md:flex-row gap-3 md:items-end">
+                    <input type="hidden" id="submenu-parent-id">
+                    <input type="hidden" id="submenu-id">
+                    <div class="flex-grow">
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Nama Layanan Sub-Menu</label>
+                        <input type="text" id="submenu-nama" required class="w-full border border-gray-300 rounded px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-indigo-500" placeholder="Contoh: Seksi Bimas Islam">
+                    </div>
+                    <div class="flex-grow">
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Tautan Tujuan (URL)</label>
+                        <input type="text" id="submenu-link" required class="w-full border border-gray-300 rounded px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-indigo-500" placeholder="https://...">
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded text-sm font-semibold transition-colors shadow">Simpan</button>
+                        <button type="button" id="btn-cancel-submenu" class="hidden bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded text-sm font-semibold">Batal</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="overflow-y-auto p-0 flex-grow bg-white">
+                <table class="w-full text-left border-collapse text-sm">
+                    <thead>
+                        <tr class="bg-gray-100 text-gray-700 border-b">
+                            <th class="p-3 pl-4 font-semibold">Nama Sub-Menu</th>
+                            <th class="p-3 font-semibold hidden md:table-cell">Tautan</th>
+                            <th class="p-3 font-semibold w-24 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-submenu-list" class="divide-y divide-gray-200">
+                        <!-- Daftar sub menu di-render JS -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
-    <!-- ==================== TOAST NOTIFIKASI ==================== -->
-    <div id="toast-notification" class="fixed bottom-5 right-5 z-[300] transform translate-y-24 opacity-0 transition-all duration-300 bg-gray-800 text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 border-l-4 border-green-400">
+    <!-- MODAL HAPUS -->
+    <div id="modal-delete" class="hidden fixed inset-0 z-[300] flex items-center justify-center">
+        <div class="absolute inset-0 bg-black/60" onclick="closeDeleteModal()"></div>
+        <div class="bg-white rounded-xl shadow-2xl z-10 w-full max-w-sm mx-4 p-6 text-center">
+            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 text-red-600 text-3xl"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3 class="font-bold text-xl mb-2">Konfirmasi Hapus</h3>
+            <p class="text-gray-600 text-sm mb-6">Yakin ingin menghapus <strong id="delete-target-name"></strong>?</p>
+            <div class="flex justify-center gap-3">
+                <button onclick="closeDeleteModal()" class="px-5 py-2 bg-gray-200 text-gray-800 rounded-lg font-medium w-full">Batal</button>
+                <button id="btn-confirm-delete" class="px-5 py-2 bg-red-600 text-white rounded-lg font-medium w-full shadow">Ya, Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast-notification" class="fixed bottom-5 right-5 z-[400] transform translate-y-24 opacity-0 transition-all duration-300 bg-gray-800 text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 border-l-4 border-green-400">
         <i id="toast-icon" class="fas fa-check-circle text-green-400 text-lg"></i>
-        <span id="toast-message" class="text-sm font-medium tracking-wide">Berhasil disimpan.</span>
+        <span id="toast-message" class="text-sm font-medium tracking-wide">Berhasil.</span>
     </div>
 
     <script>
-        /**
-         * ==========================================
-         * DATABASE & KONFIGURASI SIMULASI
-         * (Ibarat file database/data.json)
-         * ==========================================
-         */
-        
-        // 1. Konfigurasi Website (Identitas)
         let databaseConfig = {
             namaWebsite: "PORTAL LAYANAN TERPADU",
             instansi: "KANTOR KEMENTERIAN AGAMA KOTA SURAKARTA",
-            tagline: "Selamat datang di Portal Layanan Terpadu Kementerian Agama. Kami berkomitmen memberikan pelayanan prima, transparan, dan akuntabel. ✨",
+            tagline: "Selamat datang di Portal Layanan Terpadu Kementerian Agama. Melayani dengan Ikhlas dan Akuntabel. ✨",
             footerTag: "SURAKARTA BERKAH",
             backgroundUrl: "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
-            logoUrl: "", // Jika kosong, pakai logo icon default
+            logoUrl: "", 
             faviconUrl: "https://cdn-icons-png.flaticon.com/512/3004/3004122.png"
         };
 
-        // 2. Data Menu Layanan
+        // Struktur menu dengan properti tambahan: `submenus` (Array of Object)
         let databaseMenu = [
-            { id: "M01", nama: "PTSP KEMENAG", ikon: "fa-solid fa-tablet-screen-button text-orange-500", link: "#" },
-            { id: "M02", nama: "PUSAKA", ikon: "fa-solid fa-droplet text-teal-400", link: "#" },
-            { id: "M03", nama: "Inovasi Kemenag", ikon: "fa-solid fa-id-badge text-blue-500", link: "#" },
-            { id: "M04", nama: "Data & Informasi", ikon: "fa-solid fa-chart-line text-red-500", link: "#" },
-            { id: "M05", nama: "Info Kepegawaian", ikon: "fa-solid fa-users text-purple-500", link: "#" },
-            { id: "M06", nama: "Media Sosial", ikon: "fa-solid fa-share-nodes text-pink-500", link: "#" },
-            { id: "M07", nama: "Pengaduan", ikon: "fa-solid fa-bullhorn text-blue-700", link: "#" },
-            { id: "M08", nama: "Standar Pelayanan", ikon: "fa-solid fa-clipboard-check text-green-600", link: "#" }
+            { 
+                id: "M01", nama: "PTSP KEMENAG", ikon: "fa-solid fa-tablet-screen-button text-orange-500", link: "#",
+                submenus: [
+                    { id: "S01_1", nama: "Layanan Seksi Bimas Islam", link: "#bimas" },
+                    { id: "S01_2", nama: "Layanan Seksi Pendidikan Madrasah", link: "#madrasah" },
+                    { id: "S01_3", nama: "Layanan Seksi PHU (Haji & Umrah)", link: "#haji" },
+                    { id: "S01_4", nama: "Layanan Seksi PAIS", link: "#pais" }
+                ]
+            },
+            { id: "M02", nama: "PUSAKA", ikon: "fa-solid fa-droplet text-teal-400", link: "https://pusaka.kemenag.go.id/", submenus: [] },
+            { id: "M03", nama: "Inovasi Kemenag", ikon: "fa-solid fa-id-badge text-blue-500", link: "#", submenus: [] },
+            { id: "M04", nama: "Data & Informasi", ikon: "fa-solid fa-chart-line text-red-500", link: "#", submenus: [] },
+            { id: "M05", nama: "Info Kepegawaian", ikon: "fa-solid fa-users text-purple-500", link: "#", submenus: [] },
+            { id: "M06", nama: "Media Sosial", ikon: "fa-solid fa-share-nodes text-pink-500", link: "#", submenus: [] },
+            { id: "M07", nama: "Pengaduan", ikon: "fa-solid fa-bullhorn text-blue-700", link: "#", submenus: [] },
+            { id: "M08", nama: "Standar Pelayanan", ikon: "fa-solid fa-clipboard-check text-green-600", link: "#", submenus: [] }
         ];
 
-        // Elemen-elemen DOM yang akan diubah secara dinamis
-        const domElements = {
-            title: document.getElementById('page-title'),
-            favicon: document.getElementById('page-favicon'),
-            bgMain: document.getElementById('body-bg'),
-            bgLogin: document.getElementById('login-bg'),
-            tagline: document.getElementById('display-tagline'),
-            namaWeb: document.getElementById('display-nama-web'),
-            instansi: document.getElementById('display-instansi'),
-            loginInstansi: document.getElementById('login-instansi'),
-            footerInstansi: document.getElementById('display-footer-instansi'),
-            footerTag: document.getElementById('display-footer-tag'),
-            logoImg: document.getElementById('display-logo-img'),
-            logoIcon: document.getElementById('display-logo-icon')
-        };
-
-        /**
-         * FUNGSI 1: Terapkan Konfigurasi Website ke Tampilan (DOM)
-         */
         function applyWebsiteConfig() {
-            // Terapkan Identitas Teks
-            domElements.title.textContent = `${databaseConfig.namaWebsite} - ${databaseConfig.instansi}`;
-            domElements.namaWeb.textContent = databaseConfig.namaWebsite;
-            domElements.instansi.textContent = databaseConfig.instansi;
-            domElements.loginInstansi.textContent = databaseConfig.instansi;
-            domElements.footerInstansi.textContent = databaseConfig.instansi;
-            
-            // Terapkan Tagline & Footer
-            domElements.tagline.textContent = databaseConfig.tagline;
-            domElements.footerTag.innerHTML = `<i class="fas fa-heart mr-1"></i> ${databaseConfig.footerTag}`;
-            
-            // Terapkan Gambar & Latar
-            domElements.favicon.href = databaseConfig.faviconUrl || "https://cdn-icons-png.flaticon.com/512/3004/3004122.png";
+            document.getElementById('page-title').textContent = `${databaseConfig.namaWebsite} - ${databaseConfig.instansi}`;
+            document.getElementById('display-nama-web').textContent = databaseConfig.namaWebsite;
+            document.getElementById('display-instansi').textContent = databaseConfig.instansi;
+            document.getElementById('login-instansi').textContent = databaseConfig.instansi;
+            document.getElementById('display-footer-instansi').textContent = databaseConfig.instansi;
+            document.getElementById('display-tagline').textContent = databaseConfig.tagline;
+            document.getElementById('display-footer-tag').textContent = databaseConfig.footerTag;
+            document.getElementById('page-favicon').href = databaseConfig.faviconUrl || "https://cdn-icons-png.flaticon.com/512/3004/3004122.png";
             
             if (databaseConfig.backgroundUrl) {
-                domElements.bgMain.style.backgroundImage = `url('${databaseConfig.backgroundUrl}')`;
-                domElements.bgLogin.style.backgroundImage = `url('${databaseConfig.backgroundUrl}')`;
+                document.getElementById('body-bg').style.backgroundImage = `url('${databaseConfig.backgroundUrl}')`;
+                document.getElementById('login-bg').style.backgroundImage = `url('${databaseConfig.backgroundUrl}')`;
             }
 
-            // Terapkan Logo (Jika ada URL, pakai gambar. Jika tidak, pakai icon FontAwesome default)
-            if (databaseConfig.logoUrl && databaseConfig.logoUrl.trim() !== "") {
-                domElements.logoImg.src = databaseConfig.logoUrl;
-                domElements.logoImg.classList.remove('hidden');
-                domElements.logoIcon.classList.add('hidden');
+            const imgLogo = document.getElementById('display-logo-img');
+            const iconLogo = document.getElementById('display-logo-icon');
+            const loginImgLogo = document.getElementById('login-logo-img');
+            const loginIconLogo = document.getElementById('login-logo-icon');
+            
+            if (databaseConfig.logoUrl) {
+                imgLogo.src = databaseConfig.logoUrl;
+                imgLogo.classList.remove('hidden');
+                iconLogo.classList.add('hidden');
+                
+                loginImgLogo.src = databaseConfig.logoUrl;
+                loginImgLogo.classList.remove('hidden');
+                loginIconLogo.classList.add('hidden');
             } else {
-                domElements.logoImg.classList.add('hidden');
-                domElements.logoIcon.classList.remove('hidden');
+                imgLogo.classList.add('hidden');
+                iconLogo.classList.remove('hidden');
+                
+                loginImgLogo.classList.add('hidden');
+                loginIconLogo.classList.remove('hidden');
             }
         }
 
-        /**
-         * FUNGSI 2: Render Kartu Menu (Landing Page)
-         */
         const gridContainer = document.getElementById('menu-grid');
         function renderMenu() {
             gridContainer.innerHTML = '';
             databaseMenu.forEach(menu => {
                 const card = document.createElement('a');
-                card.href = menu.link;
-                card.className = 'card-menu flex flex-col items-center justify-center p-4 rounded-xl border border-gray-200 text-center aspect-square focus:outline-none';
+                
+                // Cek apakah menu ini punya sub-menu
+                const hasSub = (menu.submenus && menu.submenus.length > 0);
+                
+                card.href = hasSub ? "#" : menu.link; 
+                card.className = 'card-menu flex flex-col items-center justify-center p-4 rounded-xl border border-gray-200 text-center aspect-square focus:outline-none cursor-pointer relative';
                 card.setAttribute('aria-label', `Menu ${menu.nama}`);
                 
+                if (hasSub) {
+                    card.onclick = (e) => { e.preventDefault(); openPublicSubmenu(menu.id); };
+                } else if(menu.link === "#") {
+                    card.onclick = (e) => { e.preventDefault(); };
+                }
+
                 card.innerHTML = `
                     <div class="w-16 h-16 md:w-20 md:h-20 bg-gray-100 rounded-full flex items-center justify-center mb-3 shadow-inner">
                         <i class="${menu.ikon} text-3xl md:text-4xl" aria-hidden="true"></i>
                     </div>
                     <span class="text-sm md:text-base font-semibold text-gray-800 leading-tight">${menu.nama}</span>
+                    ${hasSub ? '<span class="absolute top-3 right-3 text-gray-400 text-xs bg-gray-100 rounded-full w-6 h-6 flex items-center justify-center"><i class="fas fa-chevron-down"></i></span>' : ''}
                 `;
                 gridContainer.appendChild(card);
             });
         }
 
-        // --- Inisialisasi Pertama Kali ---
+        // Jalankan Inisialisasi
         applyWebsiteConfig();
         renderMenu();
 
-        /**
-         * ==========================================
-         * LOGIKA AKSESIBILITAS & HALAMAN (SPA)
-         * ==========================================
-         */
+        const modalPublicSubmenu = document.getElementById('modal-public-submenu');
+        
+        function openPublicSubmenu(menuId) {
+            const menu = databaseMenu.find(m => m.id === menuId);
+            if(!menu) return;
+
+            document.getElementById('public-submenu-title').textContent = menu.nama;
+            document.getElementById('public-submenu-icon').innerHTML = `<i class="${menu.ikon} text-lg"></i>`;
+            
+            const ul = document.getElementById('public-submenu-list');
+            ul.innerHTML = '';
+            
+            menu.submenus.forEach(sub => {
+                ul.innerHTML += `
+                    <li>
+                        <a href="${sub.link}" target="_blank" class="flex items-center p-3 hover:bg-teal-50 text-gray-700 hover:text-teal-700 border-b border-gray-100 transition-colors group">
+                            <i class="fas fa-caret-right text-gray-300 group-hover:text-teal-500 mr-3 transition-colors"></i>
+                            <span class="font-medium text-sm md:text-base">${sub.nama}</span>
+                        </a>
+                    </li>
+                `;
+            });
+            modalPublicSubmenu.classList.remove('hidden');
+        }
+
+        function closePublicSubmenu() {
+            modalPublicSubmenu.classList.add('hidden');
+        }
+
+        // Aksesibilitas
         const btnToggleA11y = document.getElementById('btn-a11y-toggle');
         const a11yMenu = document.getElementById('a11y-menu');
         const bodyEl = document.body;
-        
-        // Buka/Tutup Menu Aksesibilitas
-        btnToggleA11y.addEventListener('click', () => {
-            const isHidden = a11yMenu.classList.contains('hidden');
-            a11yMenu.classList.toggle('hidden', !isHidden);
-            btnToggleA11y.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
-        });
-
-        // Ukuran Teks
+        btnToggleA11y.addEventListener('click', () => { a11yMenu.classList.toggle('hidden'); });
         document.getElementById('btn-text-normal').addEventListener('click', () => bodyEl.classList.remove('text-large', 'text-xlarge'));
-        document.getElementById('btn-text-large').addEventListener('click', () => {
-            if(bodyEl.classList.contains('text-large')) {
-                bodyEl.classList.remove('text-large');
-                bodyEl.classList.add('text-xlarge');
-            } else {
-                bodyEl.classList.add('text-large');
-            }
-        });
+        document.getElementById('btn-text-large').addEventListener('click', () => { bodyEl.classList.contains('text-large') ? bodyEl.classList.replace('text-large', 'text-xlarge') : bodyEl.classList.add('text-large'); });
+        document.getElementById('btn-contrast').addEventListener('click', () => { bodyEl.classList.toggle('high-contrast'); document.getElementById('btn-contrast').innerHTML = bodyEl.classList.contains('high-contrast') ? '<i class="fas fa-sun mr-2"></i> Mode Normal' : '<i class="fas fa-adjust mr-2"></i> Kontras Tinggi'; });
 
-        // Mode Kontras Tinggi
-        const btnContrast = document.getElementById('btn-contrast');
-        btnContrast.addEventListener('click', () => {
-            bodyEl.classList.toggle('high-contrast');
-            if(bodyEl.classList.contains('high-contrast')) {
-                btnContrast.innerHTML = '<i class="fas fa-sun mr-2"></i> Mode Normal';
-            } else {
-                btnContrast.innerHTML = '<i class="fas fa-adjust mr-2"></i> Kontras Tinggi';
-            }
-        });
-
-        // Routing Antar Layar (Beranda -> Login -> Dashboard)
-        const landingPage = document.getElementById('landing-page');
-        const loginPage = document.getElementById('login-page');
-        const dashboardPage = document.getElementById('dashboard-page');
+        // Navigasi Layar
+        const pageLanding = document.getElementById('landing-page');
+        const pageLogin = document.getElementById('login-page');
+        const pageDash = document.getElementById('dashboard-page');
         
-        document.getElementById('link-open-login').addEventListener('click', (e) => {
+        document.getElementById('link-open-login').addEventListener('click', (e) => { e.preventDefault(); pageLanding.classList.add('hidden'); pageLogin.classList.remove('hidden'); });
+        document.getElementById('link-back-landing').addEventListener('click', (e) => { e.preventDefault(); pageLogin.classList.add('hidden'); pageLanding.classList.remove('hidden'); });
+        document.getElementById('btn-logout').addEventListener('click', () => { pageDash.classList.add('hidden'); pageLanding.classList.remove('hidden'); document.getElementById('btn-submit').innerHTML = `<span id="btn-text">MASUK KE DASHBOARD</span>`; document.getElementById('btn-submit').disabled = false; });
+
+        // Login Form
+        document.getElementById('toggle-password').addEventListener('click', function(e) {
             e.preventDefault();
-            landingPage.classList.add('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                landingPage.classList.add('hidden');
-                loginPage.classList.remove('hidden');
-                setTimeout(() => landingPage.classList.remove('opacity-0', 'pointer-events-none'), 50);
-            }, 300);
+            const pw = document.getElementById('password');
+            pw.type = pw.type === 'password' ? 'text' : 'password';
+            document.getElementById('eye-icon').className = pw.type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
         });
 
-        document.getElementById('link-back-landing').addEventListener('click', (e) => {
+        document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            loginPage.classList.add('hidden');
-            landingPage.classList.remove('hidden');
-            document.getElementById('login-form').reset();
-            document.getElementById('error-message').classList.add('hidden');
-        });
-
-        document.getElementById('btn-logout').addEventListener('click', () => {
-            dashboardPage.classList.add('hidden');
-            landingPage.classList.remove('hidden');
+            const err = document.getElementById('error-message');
+            err.classList.add('hidden');
             
-            document.getElementById('login-form').reset();
-            const btnSubmit = document.getElementById('btn-submit');
-            btnSubmit.innerHTML = `<span id="btn-text">MASUK KE DASHBOARD</span><i id="btn-icon" class="fas fa-sign-in-alt ml-2 group-hover:translate-x-1 transition-transform"></i><i id="btn-spinner" class="fas fa-circle-notch fa-spin hidden ml-2"></i>`;
-            btnSubmit.classList.replace('bg-blue-600', 'bg-green-600');
-            btnSubmit.classList.replace('hover:bg-blue-700', 'hover:bg-green-700');
-            btnSubmit.disabled = false;
-            btnSubmit.classList.remove('opacity-80', 'cursor-not-allowed');
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            const btn = document.getElementById('btn-submit');
+            
+            btn.innerHTML = `<span>MEMVERIFIKASI...</span><i class="fas fa-circle-notch fa-spin ml-2"></i>`;
+            btn.disabled = true;
+
+            setTimeout(() => {
+                if(u === 'admin' && p === 'admin123') {
+                    pageLogin.classList.add('hidden');
+                    pageDash.classList.remove('hidden');
+                    renderAdminTable();
+                    populateSettings();
+                } else {
+                    document.getElementById('error-text').textContent = "Username/Password salah.";
+                    err.classList.remove('hidden');
+                    btn.innerHTML = `<span id="btn-text">MASUK KE DASHBOARD</span>`;
+                    btn.disabled = false;
+                }
+            }, 800);
         });
 
-        /**
-         * ==========================================
-         * LOGIKA FORM LOGIN
-         * ==========================================
-         */
-        const loginForm = document.getElementById('login-form');
-        const togglePassword = document.getElementById('toggle-password');
-        const passwordInput = document.getElementById('password');
-        const eyeIcon = document.getElementById('eye-icon');
-        const errorMessage = document.getElementById('error-message');
-        const errorText = document.getElementById('error-text');
-        
-        togglePassword.addEventListener('click', function (e) {
-            e.preventDefault(); 
-            const isPassword = passwordInput.getAttribute('type') === 'password';
-            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
-            eyeIcon.className = isPassword ? 'fas fa-eye-slash' : 'fas fa-eye';
+        document.getElementById('tab-menu').addEventListener('click', () => {
+            document.getElementById('admin-menu-section').classList.replace('hidden', 'block');
+            document.getElementById('admin-setting-section').classList.replace('block', 'hidden');
+            document.getElementById('tab-menu').className = "px-5 py-3 text-sm font-semibold border-b-2 border-yellow-400 text-white";
+            document.getElementById('tab-pengaturan').className = "px-5 py-3 text-sm font-medium border-b-2 border-transparent text-green-300 hover:text-white";
+        });
+        document.getElementById('tab-pengaturan').addEventListener('click', () => {
+            document.getElementById('admin-setting-section').classList.replace('hidden', 'block');
+            document.getElementById('admin-menu-section').classList.replace('block', 'hidden');
+            document.getElementById('tab-pengaturan').className = "px-5 py-3 text-sm font-semibold border-b-2 border-yellow-400 text-white";
+            document.getElementById('tab-menu').className = "px-5 py-3 text-sm font-medium border-b-2 border-transparent text-green-300 hover:text-white";
         });
 
-        loginForm.addEventListener('submit', (e) => {
+        const adminTableBody = document.getElementById('admin-table-body');
+        function renderAdminTable() {
+            adminTableBody.innerHTML = '';
+            databaseMenu.forEach(menu => {
+                const jmlSub = menu.submenus ? menu.submenus.length : 0;
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 border-b border-gray-100 transition-colors";
+                tr.innerHTML = `
+                    <td class="p-4 text-center"><div class="w-10 h-10 bg-gray-100 rounded flex items-center justify-center mx-auto text-lg"><i class="${menu.ikon}"></i></div></td>
+                    <td class="p-4 font-medium">${menu.nama} <br> <span class="text-xs text-gray-400 font-normal">ID: ${menu.id}</span></td>
+                    <td class="p-4 text-sm text-gray-500">${jmlSub > 0 ? `<span class="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs font-semibold">${jmlSub} Sub-Menu</span>` : menu.link}</td>
+                    <td class="p-4">
+                        <div class="flex items-center justify-center gap-1.5">
+                            <button onclick="openAdminSubmenu('${menu.id}')" class="text-indigo-600 bg-indigo-50 hover:bg-indigo-600 hover:text-white p-2 rounded transition-colors" title="Kelola Sub-Menu"><i class="fas fa-list-ul"></i></button>
+                            <button onclick="openMenuModal('${menu.id}')" class="text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white p-2 rounded transition-colors" title="Edit Menu"><i class="fas fa-edit"></i></button>
+                            <button onclick="confirmDelete('menu', '${menu.id}', '${menu.nama}')" class="text-red-500 bg-red-50 hover:bg-red-500 hover:text-white p-2 rounded transition-colors" title="Hapus Menu"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </td>
+                `;
+                adminTableBody.appendChild(tr);
+            });
+        }
+
+        // Modal Menu Utama
+        const modalForm = document.getElementById('modal-form');
+        document.getElementById('menu-ikon').addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            document.getElementById('icon-preview').innerHTML = val ? `<i class="${val}"></i>` : `<i class="fas fa-question text-gray-400"></i>`;
+        });
+
+        function openMenuModal(id = null) {
+            document.getElementById('menu-form').reset();
+            document.getElementById('icon-preview').innerHTML = `<i class="fas fa-question text-gray-400"></i>`;
+            if (id) {
+                const m = databaseMenu.find(x => x.id === id);
+                document.getElementById('modal-title').textContent = "Edit Menu";
+                document.getElementById('menu-id').value = m.id;
+                document.getElementById('menu-nama').value = m.nama;
+                document.getElementById('menu-ikon').value = m.ikon;
+                document.getElementById('menu-link').value = m.link;
+                document.getElementById('icon-preview').innerHTML = `<i class="${m.ikon}"></i>`;
+            } else {
+                document.getElementById('modal-title').textContent = "Tambah Menu";
+                document.getElementById('menu-id').value = "";
+            }
+            modalForm.classList.remove('hidden');
+        }
+        function closeMenuModal() { modalForm.classList.add('hidden'); }
+
+        document.getElementById('menu-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            errorMessage.classList.add('hidden');
-            loginForm.parentElement.classList.remove('error-shake');
+            const id = document.getElementById('menu-id').value;
+            const newData = {
+                id: id || "M" + Date.now().toString().slice(-4),
+                nama: document.getElementById('menu-nama').value.trim(),
+                ikon: document.getElementById('menu-ikon').value.trim(),
+                link: document.getElementById('menu-link').value.trim(),
+                submenus: [] // array kosong untuk data baru
+            };
+            if (id) {
+                const idx = databaseMenu.findIndex(x => x.id === id);
+                // Jaga array submenus lama jika sedang edit
+                newData.submenus = databaseMenu[idx].submenus || [];
+                databaseMenu[idx] = newData;
+                showToast("Menu diperbarui!");
+            } else {
+                databaseMenu.push(newData);
+                showToast("Menu ditambahkan!");
+            }
+            closeMenuModal(); renderAdminTable(); renderMenu();
+        });
 
-            const username = document.getElementById('username').value.trim();
-            const password = passwordInput.value;
+        const modalAdminSubmenu = document.getElementById('modal-admin-submenu');
+        const formAdminSubmenu = document.getElementById('form-admin-submenu');
+        const btnCancelSub = document.getElementById('btn-cancel-submenu');
+        let currentParentMenuId = null;
 
-            if (username === '' || password === '') {
-                showLoginError('Mohon isi username dan kata sandi.');
+        function openAdminSubmenu(parentId) {
+            currentParentMenuId = parentId;
+            const menu = databaseMenu.find(m => m.id === parentId);
+            
+            document.getElementById('admin-submenu-parent-name').textContent = menu.nama;
+            document.getElementById('submenu-parent-id').value = parentId;
+            formAdminSubmenu.reset();
+            document.getElementById('submenu-id').value = "";
+            btnCancelSub.classList.add('hidden');
+            
+            renderAdminSubmenuList();
+            modalAdminSubmenu.classList.remove('hidden');
+        }
+
+        function closeAdminSubmenu() {
+            modalAdminSubmenu.classList.add('hidden');
+            currentParentMenuId = null;
+        }
+
+        function renderAdminSubmenuList() {
+            const tbody = document.getElementById('admin-submenu-list');
+            tbody.innerHTML = '';
+            
+            const menu = databaseMenu.find(m => m.id === currentParentMenuId);
+            if (!menu.submenus || menu.submenus.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="p-6 text-center text-gray-500 italic">Belum ada sub-menu. Tambahkan di atas.</td></tr>`;
                 return;
             }
 
-            const btnSubmit = document.getElementById('btn-submit');
-            btnSubmit.innerHTML = `<span>MEMVERIFIKASI...</span> <i class="fas fa-circle-notch fa-spin ml-2"></i>`;
-            btnSubmit.disabled = true;
-            btnSubmit.classList.add('opacity-80', 'cursor-not-allowed');
-
-            // Simulasi API Delay
-            setTimeout(() => {
-                if (username === 'admin' && password === 'admin123') {
-                    btnSubmit.innerHTML = `<span>BERHASIL MASUK</span> <i class="fas fa-check-circle ml-2"></i>`;
-                    btnSubmit.classList.replace('bg-green-600', 'bg-blue-600');
-                    btnSubmit.classList.replace('hover:bg-green-700', 'hover:bg-blue-700');
-                    
-                    setTimeout(() => {
-                        loginPage.classList.add('hidden');
-                        dashboardPage.classList.remove('hidden');
-                        renderAdminTable(); 
-                        populateSettingsForm(); // Muat data pengaturan web ke form admin
-                    }, 800);
-                } else {
-                    showLoginError('Username atau kata sandi tidak valid. Akses ditolak.');
-                    btnSubmit.innerHTML = `<span id="btn-text">MASUK KE DASHBOARD</span><i id="btn-icon" class="fas fa-sign-in-alt ml-2 group-hover:translate-x-1 transition-transform"></i>`;
-                    btnSubmit.disabled = false;
-                    btnSubmit.classList.remove('opacity-80', 'cursor-not-allowed');
-                }
-            }, 1200);
-        });
-
-        function showLoginError(msg) {
-            errorText.textContent = msg;
-            errorMessage.classList.remove('hidden');
-            const card = loginForm.parentElement;
-            card.classList.remove('error-shake');
-            void card.offsetWidth; // trigger reflow
-            card.classList.add('error-shake');
-            document.getElementById('username').focus();
+            menu.submenus.forEach(sub => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-indigo-50/30 border-b border-gray-100";
+                tr.innerHTML = `
+                    <td class="p-3 pl-4 font-medium text-gray-800">${sub.nama}</td>
+                    <td class="p-3 text-xs text-blue-600 hidden md:table-cell truncate max-w-[150px]">${sub.link}</td>
+                    <td class="p-3">
+                        <div class="flex items-center justify-center gap-2">
+                            <button onclick="editSubmenu('${sub.id}')" class="text-blue-500 hover:text-blue-700 bg-white shadow-sm p-1.5 rounded border border-gray-200" title="Edit"><i class="fas fa-pencil-alt text-xs"></i></button>
+                            <button onclick="confirmDelete('submenu', '${sub.id}', '${sub.nama}')" class="text-red-500 hover:text-red-700 bg-white shadow-sm p-1.5 rounded border border-gray-200" title="Hapus"><i class="fas fa-trash text-xs"></i></button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            // Update tabel induk agar counter Sub-menu (Badge) ter-update
+            renderAdminTable(); 
+            renderMenu();
         }
 
-        /**
-         * ==========================================
-         * LOGIKA DASHBOARD ADMIN (Tabs, CRUD Menu, Setting Web)
-         * ==========================================
-         */
-        
-        // --- 1. TABS DASHBOARD ---
-        const tabMenu = document.getElementById('tab-menu');
-        const tabPengaturan = document.getElementById('tab-pengaturan');
-        const secMenu = document.getElementById('admin-menu-section');
-        const secPengaturan = document.getElementById('admin-setting-section');
-
-        tabMenu.addEventListener('click', () => {
-            secMenu.classList.replace('hidden', 'block');
-            secPengaturan.classList.replace('block', 'hidden');
+        // Form Submit Sub-menu
+        formAdminSubmenu.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const parentId = document.getElementById('submenu-parent-id').value;
+            const subId = document.getElementById('submenu-id').value;
             
-            tabMenu.className = "px-5 py-3 text-sm font-semibold border-b-2 border-yellow-400 text-white transition-colors";
-            tabPengaturan.className = "px-5 py-3 text-sm font-medium border-b-2 border-transparent text-green-300 hover:text-white transition-colors";
+            const menuIdx = databaseMenu.findIndex(m => m.id === parentId);
+            if(!databaseMenu[menuIdx].submenus) databaseMenu[menuIdx].submenus = [];
+
+            const newSub = {
+                id: subId || "S" + Date.now().toString().slice(-5),
+                nama: document.getElementById('submenu-nama').value.trim(),
+                link: document.getElementById('submenu-link').value.trim()
+            };
+
+            if (subId) {
+                // Edit
+                const subIdx = databaseMenu[menuIdx].submenus.findIndex(s => s.id === subId);
+                databaseMenu[menuIdx].submenus[subIdx] = newSub;
+                showToast("Sub-menu diperbarui!");
+            } else {
+                // Tambah
+                databaseMenu[menuIdx].submenus.push(newSub);
+                showToast("Sub-menu ditambahkan!");
+            }
+
+            formAdminSubmenu.reset();
+            document.getElementById('submenu-id').value = "";
+            btnCancelSub.classList.add('hidden');
+            renderAdminSubmenuList();
         });
 
-        tabPengaturan.addEventListener('click', () => {
-            secPengaturan.classList.replace('hidden', 'block');
-            secMenu.classList.replace('block', 'hidden');
-            
-            tabPengaturan.className = "px-5 py-3 text-sm font-semibold border-b-2 border-yellow-400 text-white transition-colors";
-            tabMenu.className = "px-5 py-3 text-sm font-medium border-b-2 border-transparent text-green-300 hover:text-white transition-colors";
+        // Edit Submenu (Masukkan data ke form input)
+        function editSubmenu(subId) {
+            const menu = databaseMenu.find(m => m.id === currentParentMenuId);
+            const sub = menu.submenus.find(s => s.id === subId);
+            if(sub) {
+                document.getElementById('submenu-id').value = sub.id;
+                document.getElementById('submenu-nama').value = sub.nama;
+                document.getElementById('submenu-link').value = sub.link;
+                btnCancelSub.classList.remove('hidden');
+                document.getElementById('submenu-nama').focus();
+            }
+        }
+
+        // Batalkan Edit
+        btnCancelSub.addEventListener('click', () => {
+            formAdminSubmenu.reset();
+            document.getElementById('submenu-id').value = "";
+            btnCancelSub.classList.add('hidden');
         });
 
-        // --- 2. FORM PENGATURAN WEBSITE ---
-        const settingsForm = document.getElementById('settings-form');
-        
-        function populateSettingsForm() {
+        let deleteContext = null; // 'menu' atau 'submenu'
+        let deleteTargetId = null;
+        const modalDelete = document.getElementById('modal-delete');
+
+        function confirmDelete(context, id, nama) {
+            deleteContext = context;
+            deleteTargetId = id;
+            document.getElementById('delete-target-name').textContent = nama;
+            modalDelete.classList.remove('hidden');
+        }
+        function closeDeleteModal() { modalDelete.classList.add('hidden'); deleteTargetId = null; }
+
+        document.getElementById('btn-confirm-delete').addEventListener('click', () => {
+            if (deleteContext === 'menu') {
+                databaseMenu = databaseMenu.filter(m => m.id !== deleteTargetId);
+                renderAdminTable(); renderMenu();
+            } else if (deleteContext === 'submenu') {
+                const menuIdx = databaseMenu.findIndex(m => m.id === currentParentMenuId);
+                databaseMenu[menuIdx].submenus = databaseMenu[menuIdx].submenus.filter(s => s.id !== deleteTargetId);
+                renderAdminSubmenuList();
+            }
+            closeDeleteModal();
+            showToast(deleteContext === 'menu' ? "Menu utama dihapus!" : "Sub-menu dihapus!", "error");
+        });
+
+        // Pengaturan Website
+        function populateSettings() {
             document.getElementById('set-nama-web').value = databaseConfig.namaWebsite;
             document.getElementById('set-instansi').value = databaseConfig.instansi;
             document.getElementById('set-tagline').value = databaseConfig.tagline;
@@ -730,9 +827,8 @@
             document.getElementById('set-favicon').value = databaseConfig.faviconUrl;
         }
 
-        settingsForm.addEventListener('submit', (e) => {
+        document.getElementById('settings-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            // Simpan perubahan ke objek simulasi database
             databaseConfig.namaWebsite = document.getElementById('set-nama-web').value.trim();
             databaseConfig.instansi = document.getElementById('set-instansi').value.trim();
             databaseConfig.tagline = document.getElementById('set-tagline').value.trim();
@@ -740,158 +836,25 @@
             databaseConfig.backgroundUrl = document.getElementById('set-bg-url').value.trim();
             databaseConfig.logoUrl = document.getElementById('set-logo-url').value.trim();
             databaseConfig.faviconUrl = document.getElementById('set-favicon').value.trim();
-
-            // Terapkan secara visual
             applyWebsiteConfig();
-            
-            showToast("Pengaturan Website Berhasil Diperbarui!");
+            showToast("Pengaturan disimpan!");
         });
 
-
-        // --- 3. CRUD MENU LAYANAN ---
-        const adminTableBody = document.getElementById('admin-table-body');
-        const modalForm = document.getElementById('modal-form');
-        const modalTitle = document.getElementById('modal-title');
-        const menuForm = document.getElementById('menu-form');
-        const inputIkon = document.getElementById('menu-ikon');
-        const iconPreview = document.getElementById('icon-preview');
-
-        function renderAdminTable() {
-            adminTableBody.innerHTML = '';
-            if (databaseMenu.length === 0) {
-                adminTableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-500 italic">Belum ada data menu. Silakan tambah baru.</td></tr>`;
-                return;
-            }
-
-            databaseMenu.forEach(menu => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-blue-50/50 transition-colors border-b border-gray-100 group";
-                tr.innerHTML = `
-                    <td class="p-4 text-center">
-                        <div class="w-10 h-10 bg-gray-50 border border-gray-200 rounded-full flex items-center justify-center mx-auto text-lg group-hover:bg-white group-hover:shadow transition-all">
-                            <i class="${menu.ikon}"></i>
-                        </div>
-                    </td>
-                    <td class="p-4 font-medium text-gray-800">${menu.nama}</td>
-                    <td class="p-4 text-sm text-blue-600 truncate max-w-[200px] md:max-w-xs"><a href="${menu.link}" target="_blank" class="hover:underline">${menu.link}</a></td>
-                    <td class="p-4 text-center">
-                        <div class="flex items-center justify-center gap-2">
-                            <button onclick="openMenuModal('${menu.id}')" class="text-blue-600 hover:text-white bg-blue-50 hover:bg-blue-600 p-2 rounded transition-colors" title="Edit Menu">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button onclick="confirmDelete('${menu.id}', '${menu.nama}')" class="text-red-500 hover:text-white bg-red-50 hover:bg-red-500 p-2 rounded transition-colors" title="Hapus Menu">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    </td>
-                `;
-                adminTableBody.appendChild(tr);
-            });
-        }
-
-        // Preview ikon di modal form
-        inputIkon.addEventListener('input', (e) => {
-            const val = e.target.value.trim();
-            iconPreview.innerHTML = val ? `<i class="${val}"></i>` : `<i class="fas fa-question text-gray-400"></i>`;
-        });
-
-        function openMenuModal(id = null) {
-            menuForm.reset();
-            iconPreview.innerHTML = `<i class="fas fa-question text-gray-400"></i>`;
-            
-            if (id) {
-                const menu = databaseMenu.find(m => m.id === id);
-                if (menu) {
-                    modalTitle.textContent = "Edit Menu Layanan";
-                    document.getElementById('menu-id').value = menu.id;
-                    document.getElementById('menu-nama').value = menu.nama;
-                    document.getElementById('menu-ikon').value = menu.ikon;
-                    document.getElementById('menu-link').value = menu.link;
-                    iconPreview.innerHTML = `<i class="${menu.ikon}"></i>`;
-                }
-            } else {
-                modalTitle.textContent = "Tambah Menu Baru";
-                document.getElementById('menu-id').value = "";
-            }
-            
-            modalForm.classList.remove('hidden');
-        }
-
-        function closeMenuModal() {
-            modalForm.classList.add('hidden');
-        }
-
-        menuForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const id = document.getElementById('menu-id').value;
-            const newData = {
-                id: id ? id : "M" + Date.now().toString().slice(-4),
-                nama: document.getElementById('menu-nama').value.trim(),
-                ikon: document.getElementById('menu-ikon').value.trim(),
-                link: document.getElementById('menu-link').value.trim()
-            };
-
-            if (id) {
-                const index = databaseMenu.findIndex(m => m.id === id);
-                if (index !== -1) databaseMenu[index] = newData;
-                showToast("Menu berhasil diperbarui!");
-            } else {
-                databaseMenu.push(newData);
-                showToast("Menu baru berhasil ditambahkan!");
-            }
-
-            closeMenuModal();
-            renderAdminTable(); // Perbarui tabel di Dashboard
-            renderMenu(); // Perbarui tampilan di Landing Page Utama
-        });
-
-        // --- 4. HAPUS MENU ---
-        const modalDelete = document.getElementById('modal-delete');
-        let deleteIdTarget = null;
-
-        function confirmDelete(id, nama) {
-            deleteIdTarget = id;
-            document.getElementById('delete-target-name').textContent = nama;
-            modalDelete.classList.remove('hidden');
-        }
-
-        function closeDeleteModal() {
-            modalDelete.classList.add('hidden');
-            deleteIdTarget = null;
-        }
-
-        document.getElementById('btn-confirm-delete').addEventListener('click', () => {
-            if (deleteIdTarget) {
-                databaseMenu = databaseMenu.filter(m => m.id !== deleteIdTarget);
-                closeDeleteModal();
-                renderAdminTable();
-                renderMenu();
-                showToast("Menu berhasil dihapus!", "error");
-            }
-        });
-
-        // --- 5. TOAST NOTIFIKASI UI ---
-        const toastEl = document.getElementById('toast-notification');
-        const toastMsg = document.getElementById('toast-message');
-        const toastIcon = document.getElementById('toast-icon');
+        // Notifikasi Toast
         let toastTimeout;
-
-        function showToast(message, type = "success") {
+        function showToast(msg, type="success") {
             clearTimeout(toastTimeout);
-            toastMsg.textContent = message;
+            const t = document.getElementById('toast-notification');
+            document.getElementById('toast-message').textContent = msg;
+            t.className = type === "error" 
+                ? "fixed bottom-5 right-5 z-[400] transition-all duration-300 bg-gray-800 text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 border-l-4 border-red-500 transform translate-y-0 opacity-100"
+                : "fixed bottom-5 right-5 z-[400] transition-all duration-300 bg-gray-800 text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 border-l-4 border-green-400 transform translate-y-0 opacity-100";
             
-            if (type === "error") {
-                toastEl.className = "fixed bottom-5 right-5 z-[300] transition-all duration-300 bg-gray-800 text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 border-l-4 border-red-500 transform translate-y-0 opacity-100";
-                toastIcon.className = "fas fa-trash-alt text-red-400 text-lg";
-            } else {
-                toastEl.className = "fixed bottom-5 right-5 z-[300] transition-all duration-300 bg-gray-800 text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 border-l-4 border-green-400 transform translate-y-0 opacity-100";
-                toastIcon.className = "fas fa-check-circle text-green-400 text-lg";
-            }
+            document.getElementById('toast-icon').className = type === "error" ? "fas fa-trash-alt text-red-400 text-lg" : "fas fa-check-circle text-green-400 text-lg";
             
             toastTimeout = setTimeout(() => {
-                toastEl.classList.add('translate-y-24', 'opacity-0');
-                toastEl.classList.remove('translate-y-0', 'opacity-100');
+                t.classList.add('translate-y-24', 'opacity-0');
+                t.classList.remove('translate-y-0', 'opacity-100');
             }, 3000);
         }
     </script>
